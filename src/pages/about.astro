@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+import { profile } from "../data/site";
+---
+
+<Base title={`${profile.name} - About`}>
+  <section class="section">
+    <div class="section-title">About</div>
+    <div class="content">
+      <p>
+        {profile.summary}
+      </p>
+      <p>
+        Currently: {profile.current}
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .content {
+    max-width: 68ch;
+    color: var(--muted);
+  }
+
+  .content p {
+    margin: 0 0 16px;
+  }
+</style>

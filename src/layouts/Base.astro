@@ -1,0 +1,143 @@
+---
+import "../styles/global.css";
+import { profile } from "../data/site";
+const { title = profile.name, description = profile.summary } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/">
+          <span class="brand-name">{profile.name}</span>
+          <span class="eyebrow">{profile.headline}</span>
+        </a>
+        <nav class="nav">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/cv">CV</a>
+          <a href="/archive">Archive</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <p class="footer-title">Connect</p>
+          <p class="footer-copy">Open to collaborations and design systems.</p>
+        </div>
+        <div class="footer-links">
+          {profile.links.map((link) => (
+            <a href={link.href} target="_blank" rel="noreferrer">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    gap: 24px;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .brand-name {
+    font-family: "Instrument Serif", serif;
+    font-size: 22px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 18px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 64px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-title {
+    margin: 0 0 8px;
+    font-family: "Instrument Serif", serif;
+    font-size: 18px;
+  }
+
+  .footer-copy {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    .header-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .nav {
+      flex-wrap: wrap;
+    }
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+import Base from "../../layouts/Base.astro";
+import { profile } from "../../data/site";
+---
+
+<Base title={`Vectory Pack - ${profile.name}`}>
+  <section class="section">
+    <p class="eyebrow">Case Study</p>
+    <h1>Vectory Infographic Asset Pack</h1>
+    <p class="lead">
+      Dummy case study for an infographic toolkit focused on hierarchy, clarity,
+      and scalable visual systems.
+    </p>
+    <div class="placeholder hero" aria-hidden="true"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Overview</div>
+    <p class="body">
+      Replace this with real outcomes, usage, and product details.
+    </p>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-family: "Instrument Serif", serif;
+    font-size: clamp(28px, 4vw, 44px);
+    margin: 8px 0 12px;
+  }
+
+  .lead {
+    max-width: 60ch;
+    color: var(--muted);
+  }
+
+  .hero {
+    margin-top: 24px;
+    height: 280px;
+  }
+
+  .body {
+    color: var(--muted);
+    max-width: 70ch;
+  }
+</style>
