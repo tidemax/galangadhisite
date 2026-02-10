@@ -139,6 +139,30 @@ const speaking = [
 const certifications = [
   "MTA: HTML5 Application Development Fundamentals - Microsoft",
 ];
+
+const selectedWork = [
+  {
+    title: "Monster Slides Premium Template",
+    org: "RRGraph",
+    year: "2024",
+    description:
+      "Premium presentation system exploring multiple visual styles and motion.",
+  },
+  {
+    title: "Essential Presentation Template",
+    org: "BrandEarth",
+    year: "2023",
+    description:
+      "Clean, modern slide system for business portfolios and data stories.",
+  },
+  {
+    title: "Vectory Infographic Asset Pack",
+    org: "RRGraph",
+    year: "2022",
+    description:
+      "Infographic toolkit for complex mind maps and structured storytelling.",
+  },
+];
 ---
 
 <html lang="en">
@@ -199,6 +223,27 @@ const certifications = [
                   <p class="meta-line">{project.org}</p>
                   <p>{project.description}</p>
                   <a class="cta" href="#projects">Visit site →</a>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="selected-work" class="section">
+          <div class="section-title">Selected Work</div>
+          <div class="section-body">
+            <div class="work-grid">
+              {selectedWork.map((work) => (
+                <article class="work-card">
+                  <div class="work-image" aria-hidden="true"></div>
+                  <div class="work-body">
+                    <div class="work-meta">
+                      <span>{work.org}</span>
+                      <span>{work.year}</span>
+                    </div>
+                    <h3>{work.title}</h3>
+                    <p>{work.description}</p>
+                  </div>
                 </article>
               ))}
             </div>
@@ -584,6 +629,55 @@ const certifications = [
     width: fit-content;
   }
 
+  .work-grid {
+    display: grid;
+    gap: 18px;
+  }
+
+  .work-card {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 18px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 18px;
+    background: var(--card);
+  }
+
+  .work-image {
+    border-radius: 14px;
+    background:
+      linear-gradient(135deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.02)),
+      repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.04),
+        rgba(0, 0, 0, 0.04) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    min-height: 120px;
+  }
+
+  .work-body h3 {
+    margin: 0 0 6px;
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .work-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .work-body p {
+    margin: 0;
+    color: var(--muted);
+  }
+
   .footer {
     display: grid;
     gap: 16px;
@@ -615,6 +709,10 @@ const certifications = [
 
   @media (max-width: 900px) {
     .section {
+      grid-template-columns: 1fr;
+    }
+
+    .work-card {
       grid-template-columns: 1fr;
     }
   }
