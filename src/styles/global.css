@@ -1,11 +1,11 @@
 :root {
   color-scheme: light;
-  --bg: #f7f5f2;
-  --ink: #161616;
-  --muted: #6b6b6b;
-  --line: rgba(22, 22, 22, 0.1);
-  --card: #ffffff;
-  --accent: #161616;
+  --bg: #ffffff;
+  --ink: #111111;
+  --muted: #666666;
+  --line: transparent;
+  --card: transparent;
+  --accent: #111111;
 }
 
 * {
@@ -14,7 +14,7 @@
 
 body {
   margin: 0;
-  font-family: "Instrument Sans", "Helvetica Neue", sans-serif;
+  font-family: "Inter", "Helvetica Neue", sans-serif;
   color: var(--ink);
   background: var(--bg);
   text-rendering: optimizeLegibility;
@@ -49,12 +49,14 @@ main {
 
 .section {
   padding: 48px 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: none;
 }
 
 .section-title {
-  font-family: "Instrument Serif", serif;
-  font-size: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin: 0 0 20px;
 }
 
@@ -68,7 +70,7 @@ main {
 }
 
 .card {
-  border: 1px solid var(--line);
+  border: none;
   background: var(--card);
   border-radius: 16px;
   padding: 18px;
@@ -76,15 +78,7 @@ main {
 
 .placeholder {
   border-radius: 14px;
-  background:
-    linear-gradient(135deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.02)),
-    repeating-linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0.06),
-      rgba(0, 0, 0, 0.06) 8px,
-      transparent 8px,
-      transparent 16px
-    );
+  background: #f2f2f2;
   height: 150px;
 }
 

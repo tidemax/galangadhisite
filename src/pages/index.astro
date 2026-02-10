@@ -8,6 +8,11 @@ import { profile, selectedWork } from "../data/site";
     <p class="eyebrow">{profile.pronouns} · {profile.location}</p>
     <h1>Hey, I'm {profile.name}.</h1>
     <p class="lead">{profile.summary}</p>
+    <nav class="home-nav">
+      <a href="/about">About</a>
+      <a href="/cv">CV</a>
+      <a href="/archive">Archive</a>
+    </nav>
   </section>
 
   <section class="section">
@@ -35,7 +40,6 @@ import { profile, selectedWork } from "../data/site";
   }
 
   h1 {
-    font-family: "Instrument Serif", serif;
     font-size: clamp(28px, 4vw, 44px);
     margin: 8px 0 12px;
   }
@@ -43,6 +47,16 @@ import { profile, selectedWork } from "../data/site";
   .lead {
     max-width: 60ch;
     margin: 0;
+    color: var(--muted);
+  }
+
+  .home-nav {
+    display: flex;
+    gap: 16px;
+    margin-top: 18px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--muted);
   }
 
