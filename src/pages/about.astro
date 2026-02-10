@@ -13,6 +13,11 @@ import { profile } from "../data/site";
       <p>
         Currently: {profile.current}
       </p>
+      <nav class="page-nav">
+        <a href="/">Home</a>
+        <a href="/cv">CV</a>
+        <a href="/archive">Archive</a>
+      </nav>
     </div>
   </section>
 </Base>
@@ -25,5 +30,15 @@ import { profile } from "../data/site";
 
   .content p {
     margin: 0 0 16px;
+  }
+
+  .page-nav {
+    display: flex;
+    gap: 16px;
+    margin-top: 18px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
 </style>

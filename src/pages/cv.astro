@@ -26,6 +26,12 @@ import { profile, experience, education, speaking, certifications } from "../dat
     </div>
   </section>
 
+  <nav class="page-nav">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/archive">Archive</a>
+  </nav>
+
   <section class="section">
     <div class="section-title">Education</div>
     <div class="stack">
@@ -104,6 +110,16 @@ import { profile, experience, education, speaking, certifications } from "../dat
   }
 
   .muted {
+    color: var(--muted);
+  }
+
+  .page-nav {
+    display: flex;
+    gap: 16px;
+    margin-top: 18px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--muted);
   }
 

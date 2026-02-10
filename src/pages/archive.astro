@@ -19,6 +19,12 @@ import { profile, archiveWork } from "../data/site";
       ))}
     </div>
   </section>
+
+  <nav class="page-nav">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/cv">CV</a>
+  </nav>
 </Base>
 
 <style>
@@ -34,5 +40,15 @@ import { profile, archiveWork } from "../data/site";
     letter-spacing: 0.08em;
     color: var(--muted);
     margin-top: 12px;
+  }
+
+  .page-nav {
+    display: flex;
+    gap: 16px;
+    margin-top: 18px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
 </style>
