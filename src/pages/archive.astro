@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import { profile, archiveWork } from "../data/site";
 ---
 
-<Base title={`${profile.name} - Archive`}>
+<Base title={`${profile.name} - Archive`} active="archive">
   <section class="section">
     <div class="section-title">Archive Work</div>
     <div class="grid grid-2">
@@ -20,11 +20,6 @@ import { profile, archiveWork } from "../data/site";
     </div>
   </section>
 
-  <nav class="page-nav">
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/cv">CV</a>
-  </nav>
 </Base>
 
 <style>
@@ -42,13 +37,4 @@ import { profile, archiveWork } from "../data/site";
     margin-top: 12px;
   }
 
-  .page-nav {
-    display: flex;
-    gap: 16px;
-    margin-top: 18px;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
 </style>

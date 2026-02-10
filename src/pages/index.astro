@@ -3,21 +3,10 @@ import Base from "../layouts/Base.astro";
 import { profile, selectedWork } from "../data/site";
 ---
 
-<Base title={`${profile.name} - Home`}>
-  <section class="hero">
-    <p class="eyebrow">{profile.pronouns} · {profile.location}</p>
-    <h1>Hey, I'm {profile.name}.</h1>
-    <p class="lead">{profile.summary}</p>
-    <nav class="home-nav">
-      <a href="/about">About</a>
-      <a href="/cv">CV</a>
-      <a href="/archive">Archive</a>
-    </nav>
-  </section>
-
+<Base title={`${profile.name} - Home`} active="home">
   <section class="section">
     <div class="section-title">Selected Work</div>
-    <div class="grid grid-2">
+    <div class="grid">
       {selectedWork.map((work) => (
         <article class="card work-card">
           <div class="placeholder" aria-hidden="true"></div>
@@ -35,34 +24,9 @@ import { profile, selectedWork } from "../data/site";
 </Base>
 
 <style>
-  .hero {
-    padding: 36px 0 24px;
-  }
-
-  h1 {
-    font-size: clamp(28px, 4vw, 44px);
-    margin: 8px 0 12px;
-  }
-
-  .lead {
-    max-width: 60ch;
-    margin: 0;
-    color: var(--muted);
-  }
-
-  .home-nav {
-    display: flex;
-    gap: 16px;
-    margin-top: 18px;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
   .work-card h3 {
     margin: 10px 0 6px;
-    font-size: 18px;
+    font-weight: 600;
   }
 
   .work-card p {

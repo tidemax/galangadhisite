@@ -1,7 +1,11 @@
 ---
 import "../styles/global.css";
 import { profile } from "../data/site";
-const { title = profile.name, description = profile.summary } = Astro.props;
+const {
+  title = profile.name,
+  description = profile.summary,
+  active = "home",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -22,16 +26,19 @@ const { title = profile.name, description = profile.summary } = Astro.props;
     />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="/">
-          <span class="brand-name">{profile.name}</span>
-        </a>
-      </div>
-    </header>
-
     <main>
       <div class="container">
+        <section class="profile-block">
+          <p class="eyebrow">{profile.pronouns} · {profile.location}</p>
+          <h1>Hey, I'm {profile.name}.</h1>
+          <p class="lead">{profile.summary}</p>
+          <nav class="pill-nav">
+            <a class:list={["pill", active === "home" && "active"]} href="/">Home</a>
+            <a class:list={["pill", active === "about" && "active"]} href="/about">About</a>
+            <a class:list={["pill", active === "cv" && "active"]} href="/cv">CV</a>
+            <a class:list={["pill", active === "archive" && "active"]} href="/archive">Archive</a>
+          </nav>
+        </section>
         <slot />
       </div>
     </main>
@@ -55,22 +62,48 @@ const { title = profile.name, description = profile.summary } = Astro.props;
 </html>
 
 <style>
-  .site-header {
-    background: var(--bg);
+  .profile-block {
+    padding: 32px 0 12px;
   }
 
-  .header-inner {
+  .lead {
+    max-width: 60ch;
+    margin: 8px 0 0;
+    color: var(--muted);
+  }
+
+  h1 {
+    margin: 6px 0 0;
+    font-size: inherit;
+    font-weight: 600;
+  }
+
+  .pill-nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 0;
-    gap: 24px;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
   }
 
-  .brand-name {
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+  .pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #f2f2f2;
+    color: var(--muted);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .pill:hover {
+    background: #e6e6e6;
+    color: var(--ink);
+  }
+
+  .pill.active {
+    background: #111111;
+    color: #ffffff;
   }
 
   .site-footer {
@@ -105,13 +138,8 @@ const { title = profile.name, description = profile.summary } = Astro.props;
   }
 
   @media (max-width: 700px) {
-    .header-inner {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .nav {
-      flex-wrap: wrap;
+    .pill-nav {
+      gap: 8px;
     }
   }
 </style>

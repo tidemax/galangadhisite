@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import { profile } from "../data/site";
 ---
 
-<Base title={`${profile.name} - About`}>
+<Base title={`${profile.name} - About`} active="about">
   <section class="section">
     <div class="section-title">About</div>
     <div class="content">
@@ -13,11 +13,6 @@ import { profile } from "../data/site";
       <p>
         Currently: {profile.current}
       </p>
-      <nav class="page-nav">
-        <a href="/">Home</a>
-        <a href="/cv">CV</a>
-        <a href="/archive">Archive</a>
-      </nav>
     </div>
   </section>
 </Base>
@@ -32,13 +27,4 @@ import { profile } from "../data/site";
     margin: 0 0 16px;
   }
 
-  .page-nav {
-    display: flex;
-    gap: 16px;
-    margin-top: 18px;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
 </style>
