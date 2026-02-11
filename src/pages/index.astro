@@ -4,9 +4,9 @@ import { profile, selectedWork } from "../data/site";
 ---
 
 <Base title={`${profile.name} - Home`} active="home">
-  <section class="section">
+  <section class="section work-section">
     <div class="section-title">Selected Work</div>
-    <div class="grid">
+    <div class="grid work-grid">
       {selectedWork.map((work) => (
         <article class="card work-card">
           <div class="placeholder" aria-hidden="true"></div>
@@ -24,29 +24,40 @@ import { profile, selectedWork } from "../data/site";
 </Base>
 
 <style>
+  .work-section {
+    padding-top: var(--space-6);
+  }
+
+  .work-grid {
+    gap: var(--space-6);
+  }
+
   .work-card h3 {
-    margin: 8px 0 4px;
+    margin: 0 0 8px;
     font-weight: 600;
+    font-size: 19px;
   }
 
   .work-card p {
-    margin: 0 0 8px;
+    margin: 0 0 12px;
+    font-size: 15px;
+    line-height: 1.5;
     color: var(--muted);
   }
 
   .work-meta {
     display: flex;
     gap: 12px;
-    font-size: 12px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
-    margin-top: 10px;
+    margin-top: 24px;
+    margin-bottom: 8px;
   }
 
   .work-link {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 14px;
+    font-weight: 500;
   }
 </style>

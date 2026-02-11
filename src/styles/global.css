@@ -1,5 +1,13 @@
 :root {
   color-scheme: light;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 80px;
+  --space-8: 96px;
   --bg: #ffffff;
   --ink: #111111;
   --muted: #666666;
@@ -64,33 +72,33 @@ img {
 }
 
 main {
-  padding: 24px 0 64px;
+  padding: var(--space-3) 0 var(--space-8);
 }
 
 .container {
-  max-width: 840px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 4vw, 64px);
+  padding: 0 24px;
 }
 
 .eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-size: 12px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
 .section {
-  padding: 28px 0;
+  padding: 88px 0;
   border-bottom: none;
 }
 
 .section-title {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 14px;
+  letter-spacing: 0.1em;
+  margin: 0 0 var(--space-4);
 }
 
 .grid {
@@ -105,18 +113,28 @@ main {
 .card {
   border: none;
   background: var(--card);
-  border-radius: 16px;
-  padding: 14px 0 8px;
+  border-radius: 0;
+  padding: 0;
 }
 
 .placeholder {
-  border-radius: 14px;
+  border-radius: 18px;
   background: var(--surface);
   height: 190px;
 }
 
+@media (min-width: 900px) {
+  .container {
+    padding: 0 32px;
+  }
+}
+
 @media (max-width: 700px) {
   main {
-    padding-top: 24px;
+    padding-top: var(--space-3);
+  }
+
+  .section {
+    padding: var(--space-7) 0;
   }
 }
