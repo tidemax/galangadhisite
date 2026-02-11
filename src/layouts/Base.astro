@@ -1,22 +1,14 @@
 ---
 import "../styles/global.css";
-import { profile } from "../data/site";
+import { profile, speaking } from "../data/site";
 const {
   title = profile.name,
   description = profile.summary,
   active = "home",
 } = Astro.props;
 const writingLinks = [
-  { label: "Behind the scenes of RRGraph template system ↗", href: "#" },
-  { label: "How I built cleaner presentation workflows ↗", href: "#" },
-];
-const featureLinks = [
-  { label: "Minimal gallery x1 ↗", href: "#" },
-  { label: "Landbook x3 ↗", href: "#" },
-  { label: "Lapa.ninja x1 ↗", href: "#" },
-  { label: "A1.gallery x1 ↗", href: "#" },
-  { label: "Maxbestof.one x3 ↗", href: "#" },
-  { label: "Navbar.gallery x2 ↗", href: "#" },
+  { label: "Behind the scenes of RRGraph template system ↗", href: "/blog/behind-the-scenes" },
+  { label: "How I built cleaner presentation workflows ↗", href: "/blog/cleaner-workflows" },
 ];
 ---
 
@@ -80,10 +72,10 @@ const featureLinks = [
           </div>
         </section>
         <section class="footer-row">
-          <h2 class="footer-heading">Features</h2>
+          <h2 class="footer-heading">Speak</h2>
           <div class="footer-links-grid">
-            {featureLinks.map((item) => (
-              <a class="footer-item" href={item.href}>{item.label}</a>
+            {speaking.map((item) => (
+              <a class="footer-item" href="/cv">{item.title} ↗</a>
             ))}
           </div>
         </section>
@@ -91,6 +83,9 @@ const featureLinks = [
           <p class="footer-copy">© {new Date().getFullYear()} {profile.name}</p>
           <div class="footer-links">
             <a class="social-link" href="mailto:galangadhi47@gmail.com">Email</a>
+            <a class="social-link" href="https://x.com/" target="_blank" rel="noreferrer">X</a>
+            <a class="social-link" href="https://www.behance.net/galangadhi" target="_blank" rel="noreferrer">Behance</a>
+            <a class="social-link" href="https://dribbble.com/" target="_blank" rel="noreferrer">Dribbble</a>
             <a class="social-link" href="https://www.instagram.com/galangadhi_" target="_blank" rel="noreferrer">Instagram</a>
             <a class="social-link" href="https://www.linkedin.com/in/galangadhisaputra" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
@@ -203,7 +198,7 @@ const featureLinks = [
   .footer-inner {
     display: grid;
     gap: 28px;
-    max-width: 100%;
+    max-width: 720px;
   }
 
   .footer-row {

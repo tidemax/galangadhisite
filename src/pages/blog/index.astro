@@ -1,0 +1,65 @@
+---
+import Base from "../../layouts/Base.astro";
+import { profile } from "../../data/site";
+
+const posts = [
+  {
+    title: "Behind the scenes of RRGraph template system",
+    excerpt: "How we set up a repeatable presentation template workflow for speed and visual consistency.",
+    href: "/blog/behind-the-scenes",
+    date: "2026",
+  },
+  {
+    title: "How I built cleaner presentation workflows",
+    excerpt: "A practical process for cleaner deck structures, stronger hierarchy, and easier collaboration.",
+    href: "/blog/cleaner-workflows",
+    date: "2026",
+  },
+];
+---
+
+<Base title={`${profile.name} - Blog`}>
+  <section class="section">
+    <div class="section-title">Writing</div>
+    <div class="grid">
+      {posts.map((post) => (
+        <article class="card post-card">
+          <p class="meta">{post.date}</p>
+          <h2>{post.title}</h2>
+          <p>{post.excerpt}</p>
+          <a class="post-link" href={post.href}>Read article →</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .post-card {
+    padding: 0;
+  }
+
+  .meta {
+    margin: 0 0 4px;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0 0 6px;
+    font-size: inherit;
+  }
+
+  p {
+    margin: 0 0 8px;
+    color: var(--muted);
+  }
+
+  .post-link {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>
