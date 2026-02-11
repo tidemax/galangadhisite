@@ -89,16 +89,16 @@ main {
 }
 
 .section {
-  padding: 88px 0;
+  padding: 64px 0;
   border-bottom: none;
 }
 
 .section-title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin: 0 0 var(--space-4);
+  margin: 0 0 var(--space-3);
 }
 
 .grid {
@@ -135,6 +135,6 @@ main {
   }
 
   .section {
-    padding: var(--space-7) 0;
+    padding: var(--space-6) 0;
   }
 }

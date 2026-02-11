@@ -1,6 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
-import { profile, selectedWork } from "../data/site";
+import { profile, selectedWork, speaking } from "../data/site";
+
+const writingLinks = [
+  { label: "Behind the scenes of RRGraph template system ↗", href: "/blog/behind-the-scenes" },
+  { label: "How I built cleaner presentation workflows ↗", href: "/blog/cleaner-workflows" },
+];
 ---
 
 <Base title={`${profile.name} - Home`} active="home">
@@ -21,34 +26,52 @@ import { profile, selectedWork } from "../data/site";
       ))}
     </div>
   </section>
+
+  <section class="section info-section">
+    <div class="info-group">
+      <div class="section-title">Writing</div>
+      <div class="info-links">
+        {writingLinks.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </div>
+    </div>
+
+    <div class="info-group">
+      <div class="section-title">Speak</div>
+      <div class="info-links">
+        {speaking.map((item) => (
+          <a href="/cv">{item.title} ↗</a>
+        ))}
+      </div>
+    </div>
+  </section>
 </Base>
 
 <style>
   .work-section {
-    padding-top: var(--space-6);
+    padding-top: var(--space-5);
   }
 
   .work-grid {
-    gap: var(--space-6);
+    gap: var(--space-5);
   }
 
   .work-card h3 {
     margin: 0 0 8px;
     font-weight: 600;
-    font-size: 19px;
+    font-size: 16px;
   }
 
   .work-card p {
     margin: 0 0 12px;
-    font-size: 15px;
-    line-height: 1.5;
     color: var(--muted);
   }
 
   .work-meta {
     display: flex;
     gap: 12px;
-    font-size: 13px;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
@@ -57,7 +80,42 @@ import { profile, selectedWork } from "../data/site";
   }
 
   .work-link {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .info-section {
+    padding-top: 48px;
+  }
+
+  .info-group {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+
+  .info-links {
+    display: grid;
+    gap: 16px;
+  }
+
+  .info-links a {
+    color: var(--muted);
     font-size: 14px;
-    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .info-links a:hover {
+    color: var(--ink);
+  }
+
+  @media (max-width: 700px) {
+    .info-group {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
   }
 </style>
