@@ -14,18 +14,28 @@ const writingLinks = [
     <div class="grid work-grid">
       {selectedWork.map((work) => (
         <article class="card work-card">
-          <div class="placeholder" aria-hidden="true"></div>
-          <div class="work-meta">
-            <span>{work.org}</span>
-            <span>{work.year}</span>
+          <div class="work-head">
+            <h3><a class="work-title-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
+            <div class="work-meta">
+              <span>{work.org}</span>
+              <span>{work.year}</span>
+            </div>
           </div>
-          <h3><a class="work-title-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
-          <p>{work.description}</p>
+          <div class="work-mosaic" aria-hidden="true">
+            <div class="placeholder tile tile-wide"></div>
+            <div class="placeholder tile tile-tall"></div>
+            <div class="placeholder tile tile-tall"></div>
+            <div class="placeholder tile tile-wide"></div>
+          </div>
           <div class="work-tags">
-            {work.tags?.map((tag) => (
-              <span class="tag">{tag}</span>
+            {work.tags?.map((tag, index) => (
+              <span class:list={["tag", index === 0 && "primary"]}>
+                {index === 0 && <span class="tag-dot">◆</span>}
+                {tag}
+              </span>
             ))}
           </div>
+          <p>{work.description}</p>
         </article>
       ))}
     </div>
@@ -62,9 +72,17 @@ const writingLinks = [
   }
 
   .work-card h3 {
-    margin: 0 0 8px;
+    margin: 0;
     font-weight: 600;
     font-size: 16px;
+  }
+
+  .work-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
   }
 
   .work-title-link {
@@ -77,7 +95,7 @@ const writingLinks = [
   }
 
   .work-card p {
-    margin: 0 0 12px;
+    margin: 12px 0 0;
     color: var(--muted);
   }
 
@@ -88,8 +106,34 @@ const writingLinks = [
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
-    margin-top: 24px;
-    margin-bottom: 8px;
+    white-space: nowrap;
+  }
+
+  .work-mosaic {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .tile {
+    height: 240px;
+  }
+
+  .tile-wide {
+    grid-column: span 1;
+  }
+
+  .tile-tall {
+    height: 292px;
+  }
+
+  .work-mosaic .tile:nth-child(3) {
+    grid-column: 1;
+  }
+
+  .work-mosaic .tile:nth-child(4) {
+    grid-column: 2;
   }
 
   .work-tags {
@@ -106,6 +150,20 @@ const writingLinks = [
     padding: 4px 10px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+  }
+
+  .tag.primary {
+    background: var(--surface);
+    color: var(--ink);
+    border-color: var(--surface);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tag-dot {
+    font-size: 10px;
+    opacity: 0.8;
   }
 
   .info-section {
@@ -135,6 +193,26 @@ const writingLinks = [
   }
 
   @media (max-width: 700px) {
+    .work-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .work-mosaic {
+      grid-template-columns: 1fr;
+    }
+
+    .tile,
+    .tile-tall {
+      height: 180px;
+    }
+
+    .work-mosaic .tile:nth-child(3),
+    .work-mosaic .tile:nth-child(4) {
+      grid-column: auto;
+    }
+
     .info-group {
       grid-template-columns: 1fr;
       gap: 12px;
