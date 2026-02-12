@@ -9,11 +9,11 @@ const writingLinks = [
 ---
 
 <Base title={`${profile.name} - Home`} active="home">
-  <section class="section work-section">
+  <section class="section work-section full-bleed reveal">
     <div class="section-title">Selected Work</div>
     <div class="grid work-grid">
       {selectedWork.map((work) => (
-        <article class="card work-card">
+        <article class="card work-card reveal">
           <div class="work-head">
             <h3><a class="work-title-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
             <div class="work-meta">
@@ -40,8 +40,8 @@ const writingLinks = [
     </div>
   </section>
 
-  <section class="section info-section">
-    <div class="info-group">
+  <section class="section info-section full-bleed reveal">
+    <div class="info-group reveal">
       <div class="section-title">Writing</div>
       <div class="info-links">
         {writingLinks.map((item) => (
@@ -50,7 +50,7 @@ const writingLinks = [
       </div>
     </div>
 
-    <div class="info-group">
+    <div class="info-group reveal">
       <div class="section-title">Speak</div>
       <div class="info-links">
         {speaking.map((item) => (
@@ -59,9 +59,30 @@ const writingLinks = [
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.14 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
 </Base>
 
 <style>
+  .full-bleed {
+    width: min(1380px, calc(100vw - 64px));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
   .work-section {
     padding-top: var(--space-5);
   }
@@ -180,7 +201,23 @@ const writingLinks = [
     color: var(--ink);
   }
 
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: transform, opacity;
+  }
+
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   @media (max-width: 700px) {
+    .full-bleed {
+      width: calc(100vw - 48px);
+    }
+
     .work-head {
       flex-direction: column;
       align-items: flex-start;
