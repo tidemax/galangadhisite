@@ -28,9 +28,8 @@ const writingLinks = [
             <div class="placeholder tile tile-wide"></div>
           </div>
           <div class="work-tags">
-            {work.tags?.map((tag, index) => (
-              <span class:list={["tag", index === 0 && "primary"]}>
-                {index === 0 && <span class="tag-dot">◆</span>}
+            {work.tags?.map((tag) => (
+              <span class="tag">
                 {tag}
               </span>
             ))}
@@ -81,8 +80,8 @@ const writingLinks = [
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    align-items: center;
-    margin-bottom: 16px;
+    align-items: baseline;
+    margin-bottom: 20px;
   }
 
   .work-title-link {
@@ -111,29 +110,32 @@ const writingLinks = [
 
   .work-mosaic {
     display: grid;
-    grid-template-columns: 1.8fr 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
+    grid-template-columns: 1.7fr 1fr;
+    grid-template-areas:
+      "a b"
+      "c d";
+    gap: 16px;
+    margin-bottom: 20px;
   }
 
   .tile {
-    height: 240px;
+    height: 220px;
   }
 
-  .tile-wide {
-    grid-column: span 1;
+  .work-mosaic .tile:nth-child(1) {
+    grid-area: a;
   }
 
-  .tile-tall {
-    height: 292px;
+  .work-mosaic .tile:nth-child(2) {
+    grid-area: b;
   }
 
   .work-mosaic .tile:nth-child(3) {
-    grid-column: 1;
+    grid-area: c;
   }
 
   .work-mosaic .tile:nth-child(4) {
-    grid-column: 2;
+    grid-area: d;
   }
 
   .work-tags {
@@ -150,20 +152,6 @@ const writingLinks = [
     padding: 4px 10px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-  }
-
-  .tag.primary {
-    background: var(--surface);
-    color: var(--ink);
-    border-color: var(--surface);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .tag-dot {
-    font-size: 10px;
-    opacity: 0.8;
   }
 
   .info-section {
@@ -201,16 +189,16 @@ const writingLinks = [
 
     .work-mosaic {
       grid-template-columns: 1fr;
+      grid-template-areas:
+        "a"
+        "b"
+        "c"
+        "d";
     }
 
     .tile,
-    .tile-tall {
+    .tile {
       height: 180px;
-    }
-
-    .work-mosaic .tile:nth-child(3),
-    .work-mosaic .tile:nth-child(4) {
-      grid-column: auto;
     }
 
     .info-group {
