@@ -23,6 +23,7 @@ export const selectedWork = [
     title: "Monster Slides Premium Template",
     org: "RRGraph",
     year: "2024",
+    tags: ["Presentation", "Template"],
     description:
       "Premium presentation system exploring multiple visual styles and motion.",
   },
@@ -31,6 +32,7 @@ export const selectedWork = [
     title: "Essential Presentation Template",
     org: "BrandEarth",
     year: "2023",
+    tags: ["Presentation", "Business"],
     description:
       "Clean, modern slide system for business portfolios and data stories.",
   },
@@ -39,6 +41,7 @@ export const selectedWork = [
     title: "Vectory Infographic Asset Pack",
     org: "RRGraph",
     year: "2022",
+    tags: ["Infographic", "Asset Pack"],
     description:
       "Infographic toolkit for complex mind maps and structured storytelling.",
   },
@@ -47,6 +50,7 @@ export const selectedWork = [
     title: "3D Voxel Series",
     org: "Personal",
     year: "2022",
+    tags: ["3D", "Personal"],
     description: "Ongoing voxel explorations using MagicaVoxel.",
   },
 ];

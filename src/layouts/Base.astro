@@ -39,8 +39,8 @@ const {
         <section class="profile-block">
           <div class="avatar-wrap">
             <img class="avatar" src="/avatar.svg" alt={`${profile.name} photo`} />
-            <button class="theme-toggle" type="button" data-theme-toggle>
-              Theme
+            <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+              <span class="theme-icon" data-theme-icon>☾</span>
             </button>
           </div>
           <p class="eyebrow">{profile.pronouns} · {profile.location}</p>
@@ -78,7 +78,8 @@ const {
       const root = document.documentElement;
       const updateLabel = () => {
         const isDark = root.dataset.theme === "dark";
-        if (toggle) toggle.textContent = isDark ? "Light" : "Dark";
+        const icon = document.querySelector("[data-theme-icon]");
+        if (icon) icon.textContent = isDark ? "☀" : "☾";
       };
       updateLabel();
       toggle?.addEventListener("click", () => {
@@ -119,11 +120,13 @@ const {
     background: transparent;
     color: var(--pill-ink);
     border-radius: 999px;
-    padding: 6px 10px;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font: inherit;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 15px;
     cursor: pointer;
     border: 1px solid var(--surface);
   }

@@ -19,9 +19,13 @@ const writingLinks = [
             <span>{work.org}</span>
             <span>{work.year}</span>
           </div>
-          <h3>{work.title}</h3>
+          <h3><a class="work-title-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
           <p>{work.description}</p>
-          <a class="work-link" href={`/work/${work.slug}`}>Case study →</a>
+          <div class="work-tags">
+            {work.tags?.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
         </article>
       ))}
     </div>
@@ -63,6 +67,15 @@ const writingLinks = [
     font-size: 16px;
   }
 
+  .work-title-link {
+    text-decoration: none;
+  }
+
+  .work-title-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
   .work-card p {
     margin: 0 0 12px;
     color: var(--muted);
@@ -79,8 +92,18 @@ const writingLinks = [
     margin-bottom: 8px;
   }
 
-  .work-link {
-    font-size: 12px;
+  .work-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--surface);
+    border-radius: 999px;
+    padding: 4px 10px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
