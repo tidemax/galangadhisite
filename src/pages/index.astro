@@ -78,10 +78,9 @@ const writingLinks = [
 
 <style>
   .full-bleed {
-    --tx: -50%;
     width: min(1380px, calc(100vw - 64px));
     margin-left: 50%;
-    transform: translateX(var(--tx));
+    transform: translateX(-50%);
   }
 
   .work-section {
@@ -204,19 +203,26 @@ const writingLinks = [
 
   .reveal {
     opacity: 0;
-    transform: translateX(var(--tx, 0)) translateY(18px);
+    transform: translateY(18px);
     transition: opacity 0.6s ease, transform 0.6s ease;
     will-change: transform, opacity;
   }
 
   .reveal.in-view {
     opacity: 1;
-    transform: translateX(var(--tx, 0)) translateY(0);
+    transform: translateY(0);
+  }
+
+  .full-bleed.reveal {
+    transform: translateX(-50%) translateY(18px);
+  }
+
+  .full-bleed.reveal.in-view {
+    transform: translateX(-50%) translateY(0);
   }
 
   @media (max-width: 700px) {
     .full-bleed {
-      --tx: -50%;
       width: calc(100vw - 48px);
     }
 
