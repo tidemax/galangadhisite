@@ -1,30 +1,281 @@
 ---
 import Base from "../layouts/Base.astro";
-import { profile } from "../data/site";
+import { profile, education } from "../data/site";
+
+const companies = [
+  {
+    company: "Apiculture jar",
+    location: "Remote",
+    roles: [
+      {
+        title: "Graphic Designer",
+        period: "2025 - 2026",
+        bullets: [
+          "Contributing for Berachain memes and The honey jar community.",
+          "Defined core branding for Henlo.com and produced marketing graphics for X/Twitter, banners, and website.",
+          "Defined core branding for Purupuru and produced marketing graphics for X/Twitter, banners, and website.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Liquid Mind",
+    location: "Remote",
+    roles: [
+      {
+        title: "Graphic Designer",
+        period: "2024 - 2025",
+        bullets: [
+          "Liquid Mind (formerly Beramarket) NFT marketplace - graphic designer.",
+          "Produced graphics for marketing hype and the NFT marketplace.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Helica Studio",
+    location: "Remote",
+    roles: [
+      {
+        title: "Digital Product Lead",
+        period: "2021 - Now",
+        bullets: [
+          "Run a solo digital studio contributing design assets to various microstock markets.",
+          "Provide high-quality design resources to help global designers enhance their projects.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Pixel Ninja",
+    location: "Jakarta, Indonesia",
+    roles: [
+      {
+        title: "3D Design Voxel Mentor",
+        period: "2022 - 2025",
+        bullets: [
+          "Developed and delivered comprehensive course materials, including lectures and practical assignments.",
+          "Mentored students on 3D Design Voxel, providing guidance and constructive project feedback.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "RRGraph Design",
+    location: "Malang, Indonesia",
+    roles: [
+      {
+        title: "Creative Strategies",
+        period: "2020 - Now",
+        bullets: [
+          "Co-managed a 15-member production division to deliver innovative design solutions.",
+          "Improved collaboration between designers and product managers by establishing structured design workflows.",
+          "Managed day-to-day business operations and developed product roadmaps that balanced analytical and creative goals.",
+          "Conducted market research and analysis to identify target audiences and user needs.",
+        ],
+      },
+      {
+        title: "Project Manager",
+        period: "2018 - 2020",
+        bullets: [
+          "Managed planning, execution, and delivery of multiple projects with remote and freelance designers.",
+          "Inspected PowerPoint template projects for scope, quality, and resource balancing.",
+        ],
+      },
+      {
+        title: "Senior & Junior Graphic Designer",
+        period: "2016 - 2018",
+        bullets: [
+          "Led design teams in creating visually appealing graphic designs and presentation assets.",
+          "Produced logos, banners, and interfaces while implementing graphic techniques for layout redesigns.",
+        ],
+      },
+    ],
+  },
+];
 ---
 
-<Base title={`${profile.name} - About`} active="about">
-  <section class="section">
-    <div class="section-title">About</div>
-    <div class="content">
-      <p>
-        {profile.summary}
-      </p>
-      <p>
-        Currently: {profile.current}
-      </p>
+<Base title={`${profile.name} - About / CV`} active="about" showProfile={false}>
+  <section class="section combined">
+    <div class="left-col">
+      <img class="avatar-card" src="/avatar.svg" alt={`${profile.name} avatar`} />
+      <div class="about-copy">
+        <p>
+          I am a self-taught visual designer specializing in Presentation Slides, Branding Graphics, and 3D Design.
+          I collaborate with early-stage startups, design studios, and enterprise companies to define their visual identity
+          specifically for products and marketing websites. Driven by solving complex problems and developing dynamic design systems,
+          I thrive on crafting engaging experiences that are as functional as they are delightful.
+        </p>
+        <p>
+          Currently, I drive creative strategy at RRGraph Design and lead Helica Studio, my solo digital product studio.
+        </p>
+      </div>
+    </div>
+
+    <div class="right-col" id="work-experience">
+      <h2 class="section-label">Work Experience</h2>
+      <div class="timeline">
+        {companies.map((entry) => (
+          <article class="company-block">
+            <div class="company-head">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <h3>{entry.company}</h3>
+                <p class="muted">{entry.location}</p>
+              </div>
+            </div>
+            <div class="roles">
+              {entry.roles.map((role) => (
+                <div class="role-block">
+                  <p class="role-title">{role.title} ({role.period})</p>
+                  <ul>
+                    {role.bullets.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="subsection">
+        <h2 class="section-label">Education</h2>
+        {education.map((item) => (
+          <article class="edu">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <p class="degree">{item.degree}</p>
+              <p class="muted">{item.school} · {item.location}</p>
+              <p class="muted">{item.focus}</p>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .content {
-    max-width: 68ch;
-    color: var(--muted);
+  .combined {
+    display: grid;
+    grid-template-columns: 0.88fr 1.32fr;
+    gap: 64px;
+    align-items: start;
+    padding-top: 0;
   }
 
-  .content p {
-    margin: 0 0 16px;
+  .avatar-card {
+    width: 112px;
+    height: 112px;
+    border-radius: 16px;
+    background: var(--surface);
+    margin-bottom: 24px;
   }
 
+  .about-copy {
+    max-width: 42ch;
+  }
+
+  .about-copy p {
+    margin: 0 0 20px;
+    line-height: 1.55;
+  }
+
+  .section-label {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
+    margin: 0 0 18px;
+  }
+
+  .timeline {
+    display: grid;
+    gap: 30px;
+  }
+
+  .company-block {
+    display: grid;
+    gap: 12px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .company-head {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .dot {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 6px;
+    margin-top: 2px;
+  }
+
+  h3 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 1.1rem;
+  }
+
+  .roles {
+    margin-left: 46px;
+    display: grid;
+    gap: 14px;
+  }
+
+  .role-title {
+    margin: 0 0 8px;
+    font-weight: 400;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  .subsection {
+    margin-top: 42px;
+  }
+
+  .edu {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 16px;
+    align-items: start;
+    margin-bottom: 14px;
+  }
+
+  .degree {
+    margin: 0 0 2px;
+    font-weight: 400;
+  }
+
+  .muted {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .combined {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .roles {
+      margin-left: 0;
+    }
+  }
 </style>

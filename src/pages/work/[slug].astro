@@ -1,0 +1,37 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import EntryPage from "../../layouts/EntryPage.astro";
+
+export async function getStaticPaths() {
+  const items = await getCollection("work");
+  return items.map((item) => ({
+    params: { slug: item.slug },
+    props: { slug: item.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = await getEntry("work", slug);
+if (!entry) throw new Error(`Work entry not found: ${slug}`);
+
+const { Content } = await render(entry);
+const { title, summary, org, year, role, timeline, team, skills } = entry.data;
+---
+
+<EntryPage
+  title={`${title} - Case Study`}
+  active="home"
+  backHref="/"
+  backLabel="Work"
+  kicker={`${org} · ${year}`}
+  heroTitle={title}
+  summary={summary}
+  meta={[
+    { label: "Role", value: role ?? "-" },
+    { label: "Timeline", value: timeline ?? "-" },
+    { label: "Team", value: team ?? "-" },
+    { label: "Skills", value: skills?.join(", ") ?? "-" },
+  ]}
+>
+  <Content />
+</EntryPage>

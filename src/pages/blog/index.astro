@@ -1,33 +1,23 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { profile } from "../../data/site";
+import { getCollection } from "astro:content";
 
-const posts = [
-  {
-    title: "Behind the scenes of RRGraph template system",
-    excerpt: "How we set up a repeatable presentation template workflow for speed and visual consistency.",
-    href: "/blog/behind-the-scenes",
-    date: "2026",
-  },
-  {
-    title: "How I built cleaner presentation workflows",
-    excerpt: "A practical process for cleaner deck structures, stronger hierarchy, and easier collaboration.",
-    href: "/blog/cleaner-workflows",
-    date: "2026",
-  },
-];
+const posts = (await getCollection("blog")).sort((a, b) =>
+  b.data.date.localeCompare(a.data.date)
+);
 ---
 
-<Base title={`${profile.name} - Blog`} active="blog">
+<Base title={`${profile.name} - Blog`} active="blog" showProfile={false}>
   <section class="section">
     <div class="section-title">Writing</div>
-    <div class="grid">
+    <div class="blog-grid">
       {posts.map((post) => (
-        <article class="card post-card">
-          <p class="meta">{post.date}</p>
-          <h2>{post.title}</h2>
-          <p>{post.excerpt}</p>
-          <a class="post-link" href={post.href}>Read article →</a>
+        <article class="post-card">
+          <div class="post-thumb placeholder" aria-hidden="true"></div>
+          <p class="meta">{post.data.date}</p>
+          <h3><a class="content-link" href={`/blog/${post.slug}`}>{post.data.title}</a></h3>
+          <p>{post.data.excerpt}</p>
         </article>
       ))}
     </div>
@@ -35,31 +25,46 @@ const posts = [
 </Base>
 
 <style>
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 24px;
+  }
+
   .post-card {
-    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+
+  .post-thumb {
+    aspect-ratio: 16 / 10;
+    height: auto;
+    border-radius: 10px;
   }
 
   .meta {
-    margin: 0 0 4px;
-    color: var(--muted);
-    font-size: 12px;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    margin: 0;
+    font-size: 0.84rem;
+    color: #8a8a8a;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  h2 {
-    margin: 0 0 6px;
-    font-size: inherit;
+  h3 {
+    margin: 0;
   }
 
   p {
-    margin: 0 0 8px;
+    margin: 0;
     color: var(--muted);
+    max-width: 52ch;
   }
 
-  .post-link {
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  @media (max-width: 900px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
   }
 </style>

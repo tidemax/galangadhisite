@@ -1,0 +1,31 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import EntryPage from "../../layouts/EntryPage.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = await getEntry("blog", slug);
+if (!entry) throw new Error(`Blog entry not found: ${slug}`);
+
+const { Content } = await render(entry);
+const { title, excerpt, date } = entry.data;
+---
+
+<EntryPage
+  title={`${title} - Blog`}
+  active="blog"
+  backHref="/blog"
+  backLabel="Blog"
+  kicker={`Writing · ${date}`}
+  heroTitle={title}
+  summary={excerpt}
+>
+  <Content />
+</EntryPage>

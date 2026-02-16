@@ -3,18 +3,18 @@ import Base from "../layouts/Base.astro";
 import { profile, archiveWork } from "../data/site";
 ---
 
-<Base title={`${profile.name} - Archive`} active="archive">
+<Base title={`${profile.name} - Archive`} active="archive" showProfile={false}>
   <section class="section">
-    <div class="section-title">Archive Work</div>
-    <div class="grid grid-2">
+    <div class="section-title">Archive</div>
+    <div class="archive-grid">
       {archiveWork.map((work) => (
-        <article class="card">
-          <div class="placeholder" aria-hidden="true"></div>
+        <article class="archive-card">
+          <div class="archive-thumb placeholder" aria-hidden="true"></div>
           <div class="archive-meta">
             <span>{work.type}</span>
             <span>{work.year}</span>
           </div>
-          <h3>{work.title}</h3>
+          <h3><a class="content-link" href="/archive">{work.title}</a></h3>
         </article>
       ))}
     </div>
@@ -23,18 +23,42 @@ import { profile, archiveWork } from "../data/site";
 </Base>
 
 <style>
+  .archive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 24px;
+  }
+
+  .archive-card {
+    display: grid;
+    gap: 10px;
+  }
+
+  .archive-thumb {
+    aspect-ratio: 16 / 10;
+    height: auto;
+    border-radius: 10px;
+  }
+
   h3 {
-    margin: 12px 0 0;
+    margin: 0;
   }
 
   .archive-meta {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
     display: flex;
-    gap: 12px;
-    font-size: 12px;
-    text-transform: uppercase;
+    gap: 10px;
+    font-size: 0.84rem;
     letter-spacing: 0.08em;
-    color: var(--muted);
-    margin-top: 12px;
+    text-transform: uppercase;
+    color: #8a8a8a;
+  }
+
+  @media (max-width: 900px) {
+    .archive-grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
   }
 
 </style>

@@ -8,14 +8,14 @@ const writingLinks = [
 ];
 ---
 
-<Base title={`${profile.name} - Home`} active="home">
-  <section class="section work-section full-bleed reveal">
+<Base title={`${profile.name} - Home`} active="home" showProfilePhoto={false} stickyHeader={true}>
+  <section class="section work-section reveal">
     <div class="section-title">Selected Work</div>
     <div class="grid work-grid">
       {selectedWork.map((work) => (
         <article class="card work-card reveal">
           <div class="work-head">
-            <h3><a class="work-title-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
+            <h3><a class="content-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
             <div class="work-meta">
               <span>{work.org}</span>
               <span>{work.year}</span>
@@ -40,12 +40,12 @@ const writingLinks = [
     </div>
   </section>
 
-  <section class="section info-section full-bleed reveal">
+  <section class="section info-section reveal">
     <div class="info-group reveal">
       <div class="section-title">Writing</div>
       <div class="info-links">
         {writingLinks.map((item) => (
-          <a href={item.href}>{item.label}</a>
+          <a class="content-link" href={item.href}>{item.label}</a>
         ))}
       </div>
     </div>
@@ -54,7 +54,7 @@ const writingLinks = [
       <div class="section-title">Speak</div>
       <div class="info-links">
         {speaking.map((item) => (
-          <a href="/cv">{item.title} ↗</a>
+          <a class="content-link" href="/about#work-experience">{item.title} ↗</a>
         ))}
       </div>
     </div>
@@ -77,24 +77,13 @@ const writingLinks = [
 </Base>
 
 <style>
-  .full-bleed {
-    width: min(1380px, calc(100vw - 64px));
-    margin-left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .work-section {
-    padding-top: var(--space-5);
-  }
-
   .work-grid {
-    gap: var(--space-5);
+    gap: var(--space-6);
   }
 
   .work-card h3 {
     margin: 0;
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: 400;
   }
 
   .work-head {
@@ -102,61 +91,34 @@ const writingLinks = [
     justify-content: space-between;
     gap: 12px;
     align-items: baseline;
-    margin-bottom: 20px;
-  }
-
-  .work-title-link {
-    text-decoration: none;
-  }
-
-  .work-title-link:hover {
-    text-decoration: underline;
-    text-underline-offset: 2px;
+    margin-bottom: 16px;
   }
 
   .work-card p {
     margin: 12px 0 0;
     color: var(--muted);
+    font-size: 1rem;
   }
 
   .work-meta {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
     display: flex;
     gap: 12px;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 1rem;
     color: var(--muted);
     white-space: nowrap;
   }
 
   .work-mosaic {
     display: grid;
-    grid-template-columns: 1.7fr 1fr;
-    grid-template-areas:
-      "a b"
-      "c d";
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .tile {
-    height: 220px;
-  }
-
-  .work-mosaic .tile:nth-child(1) {
-    grid-area: a;
-  }
-
-  .work-mosaic .tile:nth-child(2) {
-    grid-area: b;
-  }
-
-  .work-mosaic .tile:nth-child(3) {
-    grid-area: c;
-  }
-
-  .work-mosaic .tile:nth-child(4) {
-    grid-area: d;
+    aspect-ratio: 16 / 10;
+    height: auto;
   }
 
   .work-tags {
@@ -166,17 +128,20 @@ const writingLinks = [
   }
 
   .tag {
-    font-size: 11px;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
     color: var(--muted);
     border: 1px solid var(--surface);
     border-radius: 999px;
-    padding: 4px 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    min-height: 34px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 400;
   }
 
   .info-section {
-    padding-top: 48px;
+    padding-top: 32px;
   }
 
   .info-group {
@@ -192,13 +157,8 @@ const writingLinks = [
   }
 
   .info-links a {
-    color: var(--muted);
-    font-size: 14px;
     line-height: 1.5;
-  }
-
-  .info-links a:hover {
-    color: var(--ink);
+    font-size: 1rem;
   }
 
   .reveal {
@@ -213,19 +173,7 @@ const writingLinks = [
     transform: translateY(0);
   }
 
-  .full-bleed.reveal {
-    transform: translateX(-50%) translateY(18px);
-  }
-
-  .full-bleed.reveal.in-view {
-    transform: translateX(-50%) translateY(0);
-  }
-
   @media (max-width: 700px) {
-    .full-bleed {
-      width: calc(100vw - 48px);
-    }
-
     .work-head {
       flex-direction: column;
       align-items: flex-start;
@@ -234,16 +182,10 @@ const writingLinks = [
 
     .work-mosaic {
       grid-template-columns: 1fr;
-      grid-template-areas:
-        "a"
-        "b"
-        "c"
-        "d";
     }
 
-    .tile,
     .tile {
-      height: 180px;
+      aspect-ratio: 16 / 10;
     }
 
     .info-group {

@@ -1,117 +1,23 @@
 ---
 import Base from "../layouts/Base.astro";
-import { profile, experience, education, speaking, certifications } from "../data/site";
+import { profile } from "../data/site";
 ---
 
 <Base title={`${profile.name} - CV`} active="cv">
   <section class="section">
-    <div class="section-title">Work</div>
-    <div class="stack">
-      {experience.map((job) => (
-        <article class="card">
-          <div class="job-head">
-            <div>
-              <h3>{job.role}</h3>
-              <p class="job-meta">{job.company} · {job.location}</p>
-            </div>
-            <span class="job-period">{job.period}</span>
-          </div>
-          <ul>
-            {job.highlights.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </article>
-      ))}
-    </div>
-  </section>
-
-
-  <section class="section">
-    <div class="section-title">Education</div>
-    <div class="stack">
-      {education.map((item) => (
-        <article class="card">
-          <h3>{item.degree}</h3>
-          <p class="job-meta">{item.school} · {item.location}</p>
-          <p class="muted">{item.focus}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-title">Speaking</div>
-    <div class="stack">
-      {speaking.map((talk) => (
-        <article class="card">
-          <h3>{talk.title}</h3>
-          <p class="job-meta">{talk.venue} · {talk.location}</p>
-          <p class="muted">{talk.note}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-title">Certifications</div>
-    <ul class="list">
-      {certifications.map((item) => (
-        <li>{item}</li>
-      ))}
-    </ul>
+    <div class="section-title">CV Moved</div>
+    <p class="desc">About and CV are now combined on one page.</p>
+    <a class="go" href="/about#work-experience">Go to About / CV →</a>
   </section>
 </Base>
 
 <style>
-  .stack {
-    display: grid;
-    gap: 18px;
-  }
-
-  .job-head {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-  }
-
-  .job-meta {
-    margin: 4px 0 0;
-    color: var(--muted);
-    font-size: 14px;
-  }
-
-  .job-period {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+  .desc {
+    margin: 0 0 12px;
     color: var(--muted);
   }
 
-  ul {
-    margin: 12px 0 0;
-    padding-left: 18px;
-    color: var(--muted);
-  }
-
-  li {
-    margin-bottom: 8px;
-  }
-
-  .list {
-    margin: 0;
-    padding-left: 18px;
-    color: var(--muted);
-  }
-
-  .muted {
-    color: var(--muted);
-  }
-
-
-  @media (max-width: 700px) {
-    .job-head {
-      flex-direction: column;
-    }
+  .go {
+    font-size: 1rem;
   }
 </style>
