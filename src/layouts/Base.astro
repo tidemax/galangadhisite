@@ -1,13 +1,15 @@
 ---
 import "../styles/global.css";
 import { profile } from "../data/site";
+const siteTitle = "Galang Saputra | Visual Designer";
 const {
-  title = profile.name,
+  title = siteTitle,
   description = profile.summary,
   active = "home",
   showProfile = true,
   showProfilePhoto = true,
   stickyHeader = false,
+  showFooterContact = false,
 } = Astro.props;
 ---
 
@@ -70,6 +72,16 @@ const {
 
     <footer class="site-footer">
       <div class="container footer-inner">
+        {showFooterContact && (
+          <div class="footer-contact">
+            <p class="footer-contact-title">Get in touch</p>
+            <p class="footer-contact-body">
+              Open for collaborations, freelance, and speaking.
+              <br />
+              galangadhi47@gmail.com
+            </p>
+          </div>
+        )}
         <div class="footer-bottom">
           <p class="footer-copy">
             Based in Malang, Indonesia<br />
@@ -216,6 +228,24 @@ const {
   .site-footer {
     border-top: 1px solid var(--line);
     padding: 32px 0 24px;
+  }
+
+  .footer-contact {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .footer-contact-title {
+    margin: 0 0 6px;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
+  }
+
+  .footer-contact-body {
+    margin: 0;
   }
 
   .footer-inner {
