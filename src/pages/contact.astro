@@ -1,0 +1,170 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Contact | Galang Saputra" active="contact" showProfile={false}>
+  <section class="section contact">
+    <h1 class="contact-title">Contact</h1>
+    <p class="contact-lead">For collaborations, freelance, or project inquiries, send a message below.</p>
+    <div class="contact-grid">
+      <form class="contact-form" id="contact-form">
+        <label>
+          Name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="7" required></textarea>
+        </label>
+        <button type="submit">Send email</button>
+      </form>
+
+      <aside class="contact-side">
+        <p class="contact-meta">Timezone: GMT+7 (WIB)</p>
+        <div class="contact-links">
+          <a href="mailto:galangadhi47@gmail.com">Email</a>
+          <a href="https://x.com/" target="_blank" rel="noreferrer">X</a>
+          <a href="https://www.instagram.com/galangadhi_" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.linkedin.com/in/galangadhisaputra" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById("contact-form");
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get("name") || "").trim();
+      const email = String(data.get("email") || "").trim();
+      const message = String(data.get("message") || "").trim();
+
+      const subject = encodeURIComponent(`Website inquiry from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      window.location.href = `mailto:galangadhi47@gmail.com?subject=${subject}&body=${body}`;
+    });
+  }
+</script>
+
+<style>
+  .contact {
+    max-width: 760px;
+    padding-top: 8px;
+  }
+
+  .contact-title {
+    margin: 0 0 8px;
+  }
+
+  .contact-lead {
+    margin: 0 0 24px;
+    max-width: 56ch;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 14px;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 36px;
+    align-items: start;
+  }
+
+  .contact-side {
+    padding-top: 2px;
+  }
+
+  .contact-meta {
+    margin: 0 0 10px;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
+  }
+
+  .contact-links {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .contact-links a {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
+    text-decoration: none;
+  }
+
+  .contact-links a:hover {
+    color: #2563eb;
+    text-decoration: none;
+  }
+
+  label {
+    display: grid;
+    gap: 8px;
+    color: #8a8a8a;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 10px 12px;
+    outline: none;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #2563eb;
+  }
+
+  button {
+    width: fit-content;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 14px;
+    background: #fff;
+    color: #8a8a8a;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+  }
+
+  button:hover {
+    color: #2563eb;
+    border-color: #bcd2ff;
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>

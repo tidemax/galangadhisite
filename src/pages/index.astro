@@ -17,32 +17,44 @@ const writingLinks = [
 >
   <section class="section work-section reveal">
     <div class="section-title">Selected Work</div>
-    <div class="grid work-grid">
-      {selectedWork.map((work) => (
-        <article class="card work-card reveal">
-          <div class="work-head">
-            <h3><a class="content-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
-            <div class="work-meta">
-              <span>{work.org}</span>
-              <span>{work.year}</span>
+    <div class="case-scroll">
+      <div class="case-pin" id="case-pin">
+        <h3 class="case-pin-title">
+          <a class="content-link" id="case-pin-link" href={`/work/${selectedWork[0].slug}`}>{selectedWork[0].title}</a>
+        </h3>
+        <p class="case-pin-tag" id="case-pin-tag">{selectedWork[0].tags?.join(" · ")}</p>
+      </div>
+
+      <div class="grid work-grid">
+        {selectedWork.map((work, index) => (
+          <article
+            class="card work-card reveal"
+            data-case-title={work.title}
+            data-case-org={work.org}
+            data-case-year={work.year}
+            data-case-link={`/work/${work.slug}`}
+            data-case-tags={work.tags?.join(" · ") ?? ""}
+          >
+            {index > 0 && (
+              <div class="case-divider">
+                <h3><a class="content-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
+                <p>{work.tags?.join(" · ")}</p>
+              </div>
+            )}
+            <div class="work-mosaic" aria-hidden="true">
+              <div class="placeholder tile tile-square"></div>
+              <div class="placeholder tile tile-portrait"></div>
+              <div class="placeholder tile tile-landscape"></div>
+              <div class="placeholder tile tile-square"></div>
+              <div class="placeholder tile tile-landscape"></div>
+              <div class="placeholder tile tile-square"></div>
+              <div class="placeholder tile tile-portrait"></div>
+              <div class="placeholder tile tile-landscape"></div>
+              <div class="placeholder tile tile-portrait"></div>
             </div>
-          </div>
-          <div class="work-mosaic" aria-hidden="true">
-            <div class="placeholder tile tile-wide"></div>
-            <div class="placeholder tile tile-tall"></div>
-            <div class="placeholder tile tile-tall"></div>
-            <div class="placeholder tile tile-wide"></div>
-          </div>
-          <div class="work-tags">
-            {work.tags?.map((tag) => (
-              <span class="tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-          <p>{work.description}</p>
-        </article>
-      ))}
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -79,71 +91,178 @@ const writingLinks = [
       { threshold: 0.14 }
     );
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    const pin = document.getElementById("case-pin");
+    const pinTag = document.getElementById("case-pin-tag");
+    const pinLink = document.getElementById("case-pin-link");
+    const cards = Array.from(document.querySelectorAll(".work-card"));
+    let activeCard = cards[0];
+
+    const setPinnedCase = (card) => {
+      if (!pin || !pinTag || !pinLink || !card || activeCard === card) return;
+      activeCard = card;
+      pinLink.textContent = card.dataset.caseTitle || "";
+      pinLink.setAttribute("href", card.dataset.caseLink || "#");
+      pinTag.textContent = card.dataset.caseTags || `${card.dataset.caseOrg} · ${card.dataset.caseYear}`;
+    };
+
+    let ticking = false;
+    const updateActiveCase = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        if (!cards.length) {
+          ticking = false;
+          return;
+        }
+        const triggerY = window.innerHeight * 0.36;
+        let nextActive = cards[0];
+
+        for (const card of cards) {
+          const rect = card.getBoundingClientRect();
+          if (rect.top <= triggerY) nextActive = card;
+        }
+
+        setPinnedCase(nextActive);
+        ticking = false;
+      });
+    };
+
+    if (pin && pinTag && pinLink && cards[0]) {
+      pinLink.textContent = cards[0].dataset.caseTitle || "";
+      pinLink.setAttribute("href", cards[0].dataset.caseLink || "#");
+      pinTag.textContent = cards[0].dataset.caseTags || `${cards[0].dataset.caseOrg} · ${cards[0].dataset.caseYear}`;
+    }
+
+    updateActiveCase();
+    window.addEventListener("scroll", updateActiveCase, { passive: true });
+    window.addEventListener("resize", updateActiveCase);
   </script>
 </Base>
 
 <style>
-  .work-grid {
-    gap: var(--space-6);
+  .case-scroll {
+    position: relative;
   }
 
-  .work-card h3 {
-    margin: 0;
-    font-weight: 400;
-  }
-
-  .work-head {
+  .case-pin {
+    position: sticky;
+    top: 69px;
+    z-index: 5;
+    margin: 0 0 22px;
+    background: #fff;
+    padding: 10px 0 14px;
+    border-bottom: 1px solid var(--line);
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
     align-items: baseline;
-    margin-bottom: 16px;
+    justify-content: space-between;
+    gap: 24px;
+    transition: opacity 0.22s ease;
+    pointer-events: none;
   }
 
-  .work-card p {
-    margin: 12px 0 0;
-    color: var(--muted);
-    font-size: 1rem;
+  .case-pin-title {
+    margin: 0;
+    min-width: 0;
+    pointer-events: auto;
   }
 
-  .work-meta {
+  .case-pin-title a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+
+  .case-pin-tag {
+    margin: 0;
     font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-    display: flex;
-    gap: 12px;
-    font-size: 1rem;
+    font-size: 0.84rem;
     color: var(--muted);
     white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .work-grid {
+    gap: 28px;
+  }
+
+  .case-divider {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 16px;
+    padding: 2px 0 10px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+
+  .case-divider h3,
+  .case-divider p {
+    margin: 0;
+  }
+
+  .case-divider h3 {
+    min-width: 0;
+  }
+
+  .case-divider h3 a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .case-divider p {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .work-section {
+    padding-top: 22px;
+  }
+
+  .work-section .section-title {
+    margin-bottom: 24px;
   }
 
   .work-mosaic {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+    align-items: start;
+  }
+
+  .work-mosaic .placeholder {
+    height: auto !important;
+    border-radius: 0;
   }
 
   .tile {
-    aspect-ratio: 16 / 10;
+    width: 100%;
     height: auto;
+    align-self: start;
   }
 
-  .work-tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+  .work-mosaic .tile-square {
+    aspect-ratio: 1 / 1 !important;
+    grid-column: span 1 !important;
   }
 
-  .tag {
-    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-    color: var(--muted);
-    border: 1px solid var(--surface);
-    border-radius: 999px;
-    min-height: 34px;
-    padding: 0 12px;
-    display: inline-flex;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: 400;
+  .work-mosaic .tile-portrait {
+    aspect-ratio: 3 / 4 !important;
+    grid-column: span 1 !important;
+  }
+
+  .work-mosaic .tile-landscape {
+    aspect-ratio: 16 / 10 !important;
+    grid-column: span 1 !important;
   }
 
   .info-section {
@@ -168,22 +287,33 @@ const writingLinks = [
   }
 
   .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    will-change: transform, opacity;
-  }
-
-  .reveal.in-view {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 
   @media (max-width: 700px) {
-    .work-head {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
+    .work-section {
+      padding-top: 18px;
+    }
+
+    .work-section .section-title {
+      margin-bottom: 18px;
+    }
+
+    .work-grid {
+      gap: 20px;
+    }
+
+    .case-divider {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: 4px;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .case-pin {
+      display: none;
     }
 
     .work-mosaic {
@@ -192,6 +322,7 @@ const writingLinks = [
 
     .tile {
       aspect-ratio: 16 / 10;
+      grid-column: auto;
     }
 
     .info-group {

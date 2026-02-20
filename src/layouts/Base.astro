@@ -37,12 +37,12 @@ const {
           <span class="brand-name">GALANG SAPUTRA</span>
           <span class="brand-role">VISUAL DESIGNER</span>
         </a>
+        <p class="header-time" id="header-time">(ID) 00:00:00</p>
         <div class="header-right">
           <nav class="text-nav">
-            <a class:list={["nav-link", active === "home" && "active"]} href="/">Work</a>
-            <a class:list={["nav-link", (active === "about" || active === "cv") && "active"]} href="/about">About / CV</a>
+            <a class:list={["nav-link", (active === "about" || active === "cv") && "active"]} href="/about">Information</a>
             <a class:list={["nav-link", active === "archive" && "active"]} href="/archive">Archive</a>
-            <a class:list={["nav-link", active === "blog" && "active"]} href="/blog">Blog</a>
+            <a class:list={["nav-link", active === "contact" && "active"]} href="/contact">Contact</a>
           </nav>
         </div>
       </div>
@@ -70,36 +70,55 @@ const {
       </div>
     </main>
 
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        {showFooterContact && (
-          <div class="footer-contact">
-            <p class="footer-contact-title">Get in touch</p>
-            <p class="footer-contact-body">
-              Open for collaborations, freelance, and speaking.
-              <br />
-              galangadhi47@gmail.com
-            </p>
+    <footer class:list={["site-footer", showFooterContact ? "is-featured" : "is-simple"]}>
+      {showFooterContact ? (
+        <>
+          <div class="footer-bottom-wrap">
+            <div class="container footer-bottom">
+              <p class="footer-copy">Based in Malang, Indonesia · Designed and coded by Galang Adi Saputra</p>
+              <div class="footer-links">
+                <a class="footer-link" href="https://www.instagram.com/galangadhi_" target="_blank" rel="noreferrer">Instagram</a>
+                <a class="footer-link" href="https://www.linkedin.com/in/galangadhisaputra" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="footer-link" href="mailto:galangadhi47@gmail.com">Email</a>
+                <a class="footer-link" href="https://x.com/" target="_blank" rel="noreferrer">X</a>
+              </div>
+            </div>
           </div>
-        )}
-        <div class="footer-bottom">
-          <p class="footer-copy">
-            Based in Malang, Indonesia<br />
-            Design + Code with love by Galang Adi Saputra
-          </p>
+        </>
+      ) : (
+        <div class="container footer-simple">
+          <p class="footer-copy">Designed and coded by Galang Adi Saputra</p>
           <div class="footer-links">
-            <a class="social-link" href="mailto:galangadhi47@gmail.com">Email</a>
-            <a class="social-link" href="https://x.com/" target="_blank" rel="noreferrer">X</a>
-            <a class="social-link" href="https://www.behance.net/galangadhi" target="_blank" rel="noreferrer">Behance</a>
-            <a class="social-link" href="https://dribbble.com/" target="_blank" rel="noreferrer">Dribbble</a>
-            <a class="social-link" href="https://www.instagram.com/galangadhi_" target="_blank" rel="noreferrer">Instagram</a>
-            <a class="social-link" href="https://www.linkedin.com/in/galangadhisaputra" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="footer-link" href="https://www.instagram.com/galangadhi_" target="_blank" rel="noreferrer">Instagram</a>
+            <a class="footer-link" href="https://www.linkedin.com/in/galangadhisaputra" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="footer-link" href="mailto:galangadhi47@gmail.com">Email</a>
+            <a class="footer-link" href="https://x.com/" target="_blank" rel="noreferrer">X</a>
           </div>
         </div>
-      </div>
+      )}
     </footer>
   </body>
 </html>
+
+<script is:inline>
+  const timeEl = document.getElementById("header-time");
+
+  function updateWibTime() {
+    if (!timeEl) return;
+    const now = new Date();
+    const clock = new Intl.DateTimeFormat("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+      timeZone: "Asia/Jakarta",
+    }).format(now);
+    timeEl.textContent = `(ID) ${clock}`;
+  }
+
+  updateWibTime();
+  setInterval(updateWibTime, 1000);
+</script>
 
 <style>
   .site-header {
@@ -116,9 +135,11 @@ const {
   .header-inner {
     min-height: 68px;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    gap: 18px;
+    gap: 16px 22px;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
 
   .profile-chip {
@@ -131,6 +152,7 @@ const {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     white-space: nowrap;
+    min-width: 0;
   }
 
   .brand-name {
@@ -151,10 +173,21 @@ const {
     align-items: center;
     gap: 16px;
     justify-self: end;
+    min-width: 0;
+  }
+
+  .header-time {
+    margin: 0;
+    justify-self: center;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
   }
 
   .profile-block {
-    padding: 28px 0 18px;
+    padding: 40px 0 34px;
     position: relative;
   }
 
@@ -179,7 +212,7 @@ const {
   }
 
   .intro-more {
-    margin: 10px 0 0;
+    margin: 18px 0 0;
     color: var(--muted);
   }
 
@@ -198,11 +231,13 @@ const {
   .text-nav {
     display: flex;
     gap: 18px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: flex-end;
+    min-width: 0;
   }
 
   .nav-link,
-  .social-link,
   .intro-more a {
     font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
     font-size: 0.84rem;
@@ -215,7 +250,6 @@ const {
   }
 
   .nav-link:hover,
-  .social-link:hover,
   .intro-more a:hover {
     color: #2563eb;
     text-decoration: none;
@@ -226,17 +260,22 @@ const {
   }
 
   .site-footer {
+    margin-top: 28px;
+    background: var(--bg);
     border-top: 1px solid var(--line);
-    padding: 32px 0 24px;
   }
 
-  .footer-contact {
-    margin-bottom: 20px;
-    text-align: center;
+  .site-footer.is-featured {
+    margin-top: 34px;
   }
 
-  .footer-contact-title {
-    margin: 0 0 6px;
+  .site-footer.is-simple {
+    margin-top: 24px;
+  }
+
+  .footer-link,
+  .footer-note {
+    margin: 0;
     font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
     font-size: 0.84rem;
     text-transform: uppercase;
@@ -244,12 +283,17 @@ const {
     color: #8a8a8a;
   }
 
-  .footer-contact-body {
-    margin: 0;
+  .footer-link:hover {
+    color: #2563eb;
+    text-decoration: none;
   }
 
-  .footer-inner {
-    max-width: none;
+  .footer-note {
+    display: none;
+  }
+
+  .footer-bottom-wrap {
+    border-top: 0;
   }
 
   .footer-copy {
@@ -259,56 +303,120 @@ const {
     letter-spacing: 0.08em;
     margin: 0;
     color: #8a8a8a;
-    text-align: center;
   }
 
   .footer-bottom {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-    gap: var(--space-2);
+    gap: 12px;
     flex-wrap: wrap;
-    padding-top: 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .footer-simple {
+    padding: 12px 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
   }
 
   .footer-links {
     display: flex;
-    gap: 18px;
+    gap: 12px;
     flex-wrap: wrap;
-    justify-content: center;
   }
 
-  .social-link {
-    background: transparent;
-    display: inline-block;
-    min-height: auto;
-    padding: 0;
+  .footer-links.compact {
+    gap: 10px;
+  }
+
+  @media (max-width: 1080px) {
+    .header-inner {
+      min-height: 62px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "brand nav"
+        "time nav";
+      align-items: center;
+      gap: 8px 16px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    .profile-chip {
+      grid-area: brand;
+    }
+
+    .header-time {
+      grid-area: time;
+      justify-self: start;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+    }
+
+    .header-right {
+      grid-area: nav;
+      width: auto;
+      justify-self: end;
+      align-self: start;
+    }
+
+    .text-nav {
+      gap: 14px;
+    }
   }
 
   @media (max-width: 700px) {
     .header-inner {
       min-height: 60px;
       align-items: flex-start;
-      grid-template-columns: 1fr;
-      justify-content: center;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "brand brand"
+        "time time"
+        "nav nav";
       padding-top: 10px;
       padding-bottom: 10px;
+      gap: 8px;
     }
 
     .header-right {
       width: 100%;
       justify-content: flex-start;
-      gap: 12px;
+      justify-self: start;
+      align-self: start;
+    }
+
+    .header-time {
+      justify-self: flex-start;
     }
 
     .text-nav {
       gap: 10px;
+      flex-wrap: wrap;
+      white-space: normal;
+      justify-content: flex-start;
     }
 
     .profile-chip {
       font-size: 0.78rem;
       letter-spacing: 0.06em;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .footer-simple {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
     }
 
   }
