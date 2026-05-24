@@ -6,6 +6,49 @@ const writingLinks = [
   { label: "Behind the scenes of RRGraph template system ↗", href: "/blog/behind-the-scenes" },
   { label: "How I built cleaner presentation workflows ↗", href: "/blog/cleaner-workflows" },
 ];
+
+let henloMedia = Object.entries(
+  import.meta.glob("/src/content/work/Henlo Branding/*.{png,jpg,jpeg,webp,mp4}", {
+    eager: true,
+    query: "?url",
+    import: "default",
+  })
+)
+  .map(([path, src]) => {
+    const name = path.split("/").pop() || "";
+    const lower = name.toLowerCase();
+    const ratioClass = lower.includes("portrait")
+      ? "tile-portrait"
+      : lower.includes("landscape")
+        ? "tile-landscape"
+        : "tile-square";
+
+    return {
+      src: String(src),
+      name,
+      ratioClass,
+      isVideo: lower.endsWith(".mp4"),
+    };
+  })
+  .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+const idx4 = henloMedia.findIndex((item) => item.name.toLowerCase().startsWith("4 "));
+const idx10 = henloMedia.findIndex((item) => item.name.toLowerCase().startsWith("10 "));
+if (idx4 !== -1 && idx10 !== -1) {
+  [henloMedia[idx4], henloMedia[idx10]] = [henloMedia[idx10], henloMedia[idx4]];
+}
+
+const fallbackClasses = [
+  "tile-square",
+  "tile-portrait",
+  "tile-landscape",
+  "tile-square",
+  "tile-landscape",
+  "tile-square",
+  "tile-portrait",
+  "tile-landscape",
+  "tile-portrait",
+];
 ---
 
 <Base
@@ -16,25 +59,25 @@ const writingLinks = [
   showFooterContact={true}
 >
   <section class="section work-section reveal">
-    <div class="section-title">Selected Work</div>
-    <div class="case-scroll">
-      <div class="case-pin" id="case-pin">
-        <h3 class="case-pin-title">
-          <a class="content-link" id="case-pin-link" href={`/work/${selectedWork[0].slug}`}>{selectedWork[0].title}</a>
-        </h3>
-        <p class="case-pin-tag" id="case-pin-tag">{selectedWork[0].tags?.join(" · ")}</p>
-      </div>
+      <div class="section-title">Selected Work</div>
+      <div class="case-scroll">
+        <div class="case-pin" id="case-pin">
+          <h3 class="case-pin-title">
+            <a class="content-link" id="case-pin-link" href={`/work/${selectedWork[0].slug}`}>{selectedWork[0].title}</a>
+          </h3>
+          <p class="case-pin-tag" id="case-pin-tag">{selectedWork[0].tags?.join(" · ")}</p>
+        </div>
 
-      <div class="grid work-grid">
-        {selectedWork.map((work, index) => (
-          <article
-            class="card work-card reveal"
-            data-case-title={work.title}
-            data-case-org={work.org}
-            data-case-year={work.year}
-            data-case-link={`/work/${work.slug}`}
-            data-case-tags={work.tags?.join(" · ") ?? ""}
-          >
+        <div class="grid work-grid">
+          {selectedWork.map((work, index) => (
+            <article
+              class="card work-card reveal"
+              data-case-title={work.title}
+              data-case-org={work.org}
+              data-case-year={work.year}
+              data-case-link={`/work/${work.slug}`}
+              data-case-tags={work.tags?.join(" · ") ?? ""}
+            >
             {index > 0 && (
               <div class="case-divider">
                 <h3><a class="content-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
@@ -42,40 +85,63 @@ const writingLinks = [
               </div>
             )}
             <div class="work-mosaic" aria-hidden="true">
-              <div class="placeholder tile tile-square"></div>
-              <div class="placeholder tile tile-portrait"></div>
-              <div class="placeholder tile tile-landscape"></div>
-              <div class="placeholder tile tile-square"></div>
-              <div class="placeholder tile tile-landscape"></div>
-              <div class="placeholder tile tile-square"></div>
-              <div class="placeholder tile tile-portrait"></div>
-              <div class="placeholder tile tile-landscape"></div>
-              <div class="placeholder tile tile-portrait"></div>
+              {index === 0 && henloMedia.length > 0
+                ? henloMedia.map((item, mediaIndex) =>
+                    <div class={`tile-item ${item.ratioClass}`}>
+                      {item.isVideo ? (
+                        <video
+                          class="tile-media tile-image"
+                          src={item.src}
+                          aria-label={`Henlo Branding video ${mediaIndex + 1}`}
+                          muted
+                          loop
+                          playsinline
+                          autoplay
+                          preload="metadata"
+                        ></video>
+                      ) : (
+                        <img
+                          class="tile-media tile-image"
+                          src={item.src}
+                          alt={`Henlo Branding visual ${mediaIndex + 1}`}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
+                      <p class="tile-label">HENLO {String(mediaIndex + 1).padStart(2, "0")}.{item.name.split(".").pop()?.toUpperCase()}</p>
+                    </div>
+                  )
+                : fallbackClasses.map((ratioClass, imageIndex) => (
+                    <div class={`tile-item ${ratioClass}`}>
+                      <div class="placeholder tile-media"></div>
+                      <p class="tile-label">HENLO {String(imageIndex + 1).padStart(2, "0")}.PNG</p>
+                    </div>
+                  ))}
             </div>
           </article>
         ))}
       </div>
-    </div>
+      </div>
   </section>
 
   <section class="section info-section reveal">
-    <div class="info-group reveal">
-      <div class="section-title">Writing</div>
-      <div class="info-links">
-        {writingLinks.map((item) => (
-          <a class="content-link" href={item.href}>{item.label}</a>
-        ))}
+      <div class="info-group reveal">
+        <div class="section-title">Writing</div>
+        <div class="info-links">
+          {writingLinks.map((item) => (
+            <a class="content-link" href={item.href}>{item.label}</a>
+          ))}
+        </div>
       </div>
-    </div>
 
-    <div class="info-group reveal">
-      <div class="section-title">Speak</div>
-      <div class="info-links">
-        {speaking.map((item) => (
-          <a class="content-link" href="/about#work-experience">{item.title} ↗</a>
-        ))}
+      <div class="info-group reveal">
+        <div class="section-title">Speak</div>
+        <div class="info-links">
+          {speaking.map((item) => (
+            <a class="content-link" href="/about#work-experience">{item.title} ↗</a>
+          ))}
+        </div>
       </div>
-    </div>
   </section>
 
   <script is:inline>
@@ -244,25 +310,52 @@ const writingLinks = [
     border-radius: 0;
   }
 
-  .tile {
+  .tile-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 0;
+    background: var(--surface);
+  }
+
+  .tile-item {
+    width: 100%;
+    height: auto;
+    align-self: start;
+    display: grid;
+    gap: 4px;
+  }
+
+  .tile-media {
     width: 100%;
     height: auto;
     align-self: start;
   }
 
-  .work-mosaic .tile-square {
+  .work-mosaic .tile-item.tile-square .tile-media {
     aspect-ratio: 1 / 1 !important;
     grid-column: span 1 !important;
   }
 
-  .work-mosaic .tile-portrait {
+  .work-mosaic .tile-item.tile-portrait .tile-media {
     aspect-ratio: 3 / 4 !important;
     grid-column: span 1 !important;
   }
 
-  .work-mosaic .tile-landscape {
+  .work-mosaic .tile-item.tile-landscape .tile-media {
     aspect-ratio: 16 / 10 !important;
     grid-column: span 1 !important;
+  }
+
+  .tile-label {
+    margin: 0;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 11px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
   }
 
   .info-section {
@@ -320,7 +413,7 @@ const writingLinks = [
       grid-template-columns: 1fr;
     }
 
-    .tile {
+    .tile-media {
       aspect-ratio: 16 / 10;
       grid-column: auto;
     }

@@ -19,13 +19,13 @@ export const profile = {
 
 export const selectedWork = [
   {
-    slug: "monster-slides",
-    title: "Monster Slides Premium Template",
-    org: "RRGraph",
-    year: "2024",
-    tags: ["Presentation", "Template"],
+    slug: "henlo-branding",
+    title: "Henlo Branding",
+    org: "Apiculture Jar",
+    year: "2025",
+    tags: ["Branding", "Graphic Design"],
     description:
-      "Premium presentation system exploring multiple visual styles and motion.",
+      "Brand identity and marketing visual system for Henlo and ecosystem campaigns.",
   },
   {
     slug: "essential-template",
