@@ -32,7 +32,7 @@ export const selectedWork = [
     title: "Interactive Portfolio Design",
     org: "Helica Studio",
     year: "2024",
-    tags: ["UX/UI", "Web Design"],
+    tags: ["Presentation"],
     description:
       "Interactive portfolio concepts and interface design system.",
   },
@@ -44,6 +44,24 @@ export const selectedWork = [
     tags: ["Presentation", "Report"],
     description:
       "Professional presentation deck design and visual report system for Mazda.",
+  },
+  {
+    slug: "logo-&-brand-mark",
+    title: "Logo & Brand Mark",
+    org: "Selected Archive",
+    year: "2024",
+    tags: ["Logo", "Branding"],
+    description:
+      "A collection of logo marks and brand identity explorations.",
+  },
+  {
+    slug: "merch-work-from-home-remote",
+    title: "Merch Work From Home Remote",
+    org: "Selected Archive",
+    year: "2024",
+    tags: ["Merchandise", "Graphic Design"],
+    description:
+      "Merchandise graphics and visual assets for remote work themes.",
   },
 ];
 

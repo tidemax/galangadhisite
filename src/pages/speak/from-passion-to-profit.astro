@@ -1,0 +1,106 @@
+---
+import EntryPage from "../../layouts/EntryPage.astro";
+
+const photos = Object.values(
+  import.meta.glob("/src/content/speak/From Passion to Profit/*.{jpeg,jpg,png}", {
+    eager: true,
+    query: "?url",
+    import: "default",
+  })
+).map(String);
+
+const title = "From Passion to Profit: Monetizing Creativity in Digital Graphic Design";
+const originalTitle = "From Passion to Profit: Monetisasi Kreativitas dalam Desain Grafis Produk Digital";
+---
+
+<EntryPage
+  title={`${title} | Galang Saputra`}
+  backHref="/"
+  backLabel="Home"
+  kicker="Speaking · Asia Goes To Campus"
+  heroTitle={title}
+  summary="A speaking session at Institut Asia Malang about turning creative design skills into sustainable digital product income."
+  meta={[
+    { label: "Date", value: "Saturday, 17 June 2023" },
+    { label: "Venue", value: "Institut Asia Malang" },
+    { label: "Location", value: "Malang, Indonesia" },
+    { label: "Language", value: "Bahasa Indonesia" },
+  ]}
+>
+  <p class="original-name">
+    <span>Original Name in Indonesia</span>
+    {originalTitle}
+  </p>
+
+  <p class="presentation-note">
+    Note: The presentation language used for this session was Bahasa Indonesia.
+  </p>
+
+  <p>
+    Invited as an alumni speaker by the Asia Institute team, I shared my personal journey from working as a freelance designer to building and running a digital product studio. The session was shaped like a practical article for students and young creatives: how design skills can grow from a personal passion into a more structured, sustainable creative business.
+  </p>
+
+  <p>
+    The talk covered the early steps of finding a design niche, building a portfolio, packaging creative work into digital products, and understanding how marketplaces such as GraphicRiver and Envato Elements can become a distribution channel for designers. I also shared how creative consistency, research, and production discipline matter when moving from one-off client work into repeatable digital assets.
+  </p>
+
+  <p>
+    Beyond the business side, the session also focused on mindset. I spoke about the importance of learning independently, staying curious about tools and visual trends, and treating design as both craft and strategy. The goal was to help students see that graphic design can become more than a service skill: it can become a creative system that supports long-term income and professional growth.
+  </p>
+
+  <div class="speak-gallery">
+    {photos.map((src, i) => (
+      <img
+        class="speak-img"
+        src={src}
+        alt={`From Passion to Profit event photo ${i + 1}`}
+        loading="lazy"
+        decoding="async"
+      />
+    ))}
+  </div>
+</EntryPage>
+
+<style>
+  .original-name,
+  .presentation-note {
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .original-name span {
+    display: block;
+    margin-bottom: 6px;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
+  }
+
+  .presentation-note {
+    color: var(--muted);
+  }
+
+  .speak-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .speak-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    background: var(--surface);
+  }
+
+  @media (max-width: 700px) {
+    .speak-gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

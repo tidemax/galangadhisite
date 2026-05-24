@@ -1,64 +1,170 @@
 ---
 import Base from "../layouts/Base.astro";
-import { profile, archiveWork } from "../data/site";
+
+const archiveFiles = Object.entries(
+  import.meta.glob("/src/archivework/*.{jpg,jpeg,png,webp}", {
+    eager: true,
+    query: "?url",
+    import: "default",
+  })
+);
+
+const archiveNames: Record<number, string> = {
+  1: "Merchandise Pack Design",
+  2: "Color System Presentation",
+  3: "Liquidity Talk Deck",
+  4: "Spring Poster Design",
+  5: "Seasonal Food Flyer",
+  6: "Floral Event Poster",
+  7: "Good Friday Poster",
+  8: "Women Day Campaign",
+  9: "Sporty Editorial Banner",
+  10: "Project Palapal Logo",
+  11: "Character Banner Design",
+  12: "Character Key Visual",
+  13: "Character Notebook Mockup",
+  14: "Green Notebook Mockup",
+  15: "Yellow Notebook Mockup",
+  16: "Phone Case Mockup",
+  17: "Opening Mockup Poster",
+  18: "Character Sticker Pack",
+  19: "Email Signature Template",
+  20: "Tennis Sport Poster",
+  21: "Sticker Pack Display",
+  22: "Pastel 3D Render",
+  23: "Abstract 3D Stage",
+  24: "Minimal 3D Interior",
+  25: "Gray Abstract 3D Render",
+  26: "Material Study 3D Render",
+  27: "Iridescent 3D Render",
+  28: "Moss Abstract 3D Render",
+  29: "Long Sleeve Mockup",
+  30: "Creative Slide Template",
+  31: "Black White Deck Layout",
+  32: "Mobile App UI Design",
+  33: "Wellness App Interface",
+  34: "Fintech Card UI",
+  35: "Finance Icon Set",
+  36: "Quokka Surf Landing Page",
+  37: "Momentum Banner Design",
+  38: "Juniper Web Banner",
+  39: "Stinken Web Banner",
+  40: "Poster Mockup Design",
+  41: "Sports Supplement Layout",
+  42: "Mobile Payment UI",
+  43: "Menu Mockup Design",
+  44: "Billboard Mockup",
+  45: "iPad Display Mockup",
+  46: "Billboard Mockup Scene",
+  47: "Tablet Display Mockup",
+  48: "Outdoor Billboard Mockup",
+  49: "Handheld iPad Mockup",
+  50: "Google Pixel Mockup",
+  51: "Pixel Phone Mockup",
+  52: "Tank Top Mockup",
+};
+
+const archiveItems = archiveFiles
+  .map(([path, src]) => {
+    const match = path.match(/\((\d+)\)/);
+    const number = match ? Number(match[1]) : 0;
+
+    return {
+      src: String(src),
+      number,
+      name: archiveNames[number] ?? "Archive Work",
+      sortKey: number ? (number * 17) % 53 : 0,
+    };
+  })
+  .sort((a, b) => a.sortKey - b.sortKey)
 ---
 
-<Base title="Archive | Galang Saputra" active="archive" showProfile={false}>
-  <section class="section">
-    <div class="section-title">Archive</div>
-    <div class="archive-grid">
-      {archiveWork.map((work) => (
-        <article class="archive-card">
-          <div class="archive-thumb placeholder" aria-hidden="true"></div>
-          <div class="archive-meta">
-            <span>{work.type}</span>
-            <span>{work.year}</span>
-          </div>
-          <h3><a class="content-link" href="/archive">{work.title}</a></h3>
-        </article>
+<Base title="Archive Work | Galang Saputra" active="archive" showProfile={false}>
+  <section class="section archive-section">
+    <div class="section-title">Archive Work</div>
+    <div class="archive-mosaic">
+      {archiveItems.map((item, index) => (
+        <figure class="archive-item">
+          <img
+            class="archive-image"
+            src={item.src}
+            alt={item.name}
+            loading={index < 8 ? "eager" : "lazy"}
+            decoding="async"
+          />
+          <figcaption class="archive-caption">
+            {item.name} {String(index + 1).padStart(2, "0")}.JPG
+          </figcaption>
+        </figure>
       ))}
     </div>
   </section>
-
 </Base>
 
 <style>
-  .archive-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px 24px;
+  .archive-section {
+    padding-top: 22px;
   }
 
-  .archive-card {
-    display: grid;
-    gap: 10px;
+  .archive-section .section-title {
+    margin-bottom: 24px;
   }
 
-  .archive-thumb {
-    aspect-ratio: 16 / 10;
-    height: auto;
-    border-radius: 10px;
+  .archive-mosaic {
+    column-count: 4;
+    column-gap: 16px;
   }
 
-  h3 {
+  .archive-item {
     margin: 0;
+    display: grid;
+    gap: 4px;
+    width: 100%;
+    min-width: 0;
+    break-inside: avoid;
+    margin-bottom: 16px;
   }
 
-  .archive-meta {
+  .archive-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: var(--surface);
+  }
+
+  .archive-caption {
+    margin: 0;
     font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-    display: flex;
-    gap: 10px;
-    font-size: 0.84rem;
-    letter-spacing: 0.08em;
+    font-size: 11px;
+    line-height: 1.2;
     text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: #8a8a8a;
   }
 
   @media (max-width: 900px) {
-    .archive-grid {
-      grid-template-columns: 1fr;
-      gap: 22px;
+    .archive-mosaic {
+      column-count: 2;
+      column-gap: 12px;
     }
+
+    .archive-item {
+      margin-bottom: 12px;
+    }
+
   }
 
+  @media (max-width: 560px) {
+    .archive-section {
+      padding-top: 18px;
+    }
+
+    .archive-section .section-title {
+      margin-bottom: 18px;
+    }
+
+    .archive-mosaic {
+      column-count: 1;
+    }
+  }
 </style>
