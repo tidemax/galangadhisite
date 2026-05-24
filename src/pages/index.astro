@@ -84,7 +84,7 @@ const fallbackClasses = [
       <div class="case-scroll">
         <div class="case-pin" id="case-pin">
           <h3 class="case-pin-title">
-            <a class="content-link" id="case-pin-link" href={`/work/${selectedWork[0].slug}`}>{selectedWork[0].title}</a>
+            <span id="case-pin-link">{selectedWork[0].title}</span>
           </h3>
           <p class="case-pin-tag" id="case-pin-tag">{selectedWork[0].tags?.join(" · ")}</p>
         </div>
@@ -96,12 +96,11 @@ const fallbackClasses = [
               data-case-title={work.title}
               data-case-org={work.org}
               data-case-year={work.year}
-              data-case-link={`/work/${work.slug}`}
               data-case-tags={work.tags?.join(" · ") ?? ""}
             >
             {index > 0 && (
               <div class="case-divider">
-                <h3><a class="content-link" href={`/work/${work.slug}`}>{work.title}</a></h3>
+                <h3>{work.title}</h3>
                 <p>{work.tags?.join(" · ")}</p>
               </div>
             )}
@@ -189,7 +188,6 @@ const fallbackClasses = [
       if (!pin || !pinTag || !pinLink || !card || activeCard === card) return;
       activeCard = card;
       pinLink.textContent = card.dataset.caseTitle || "";
-      pinLink.setAttribute("href", card.dataset.caseLink || "#");
       pinTag.textContent = card.dataset.caseTags || `${card.dataset.caseOrg} · ${card.dataset.caseYear}`;
     };
 
@@ -217,7 +215,6 @@ const fallbackClasses = [
 
     if (pin && pinTag && pinLink && cards[0]) {
       pinLink.textContent = cards[0].dataset.caseTitle || "";
-      pinLink.setAttribute("href", cards[0].dataset.caseLink || "#");
       pinTag.textContent = cards[0].dataset.caseTags || `${cards[0].dataset.caseOrg} · ${cards[0].dataset.caseYear}`;
     }
 
