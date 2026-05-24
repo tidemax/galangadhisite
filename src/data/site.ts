@@ -28,30 +28,22 @@ export const selectedWork = [
       "Brand identity and marketing visual system for Henlo and ecosystem campaigns.",
   },
   {
-    slug: "essential-template",
-    title: "Essential Presentation Template",
-    org: "BrandEarth",
-    year: "2023",
-    tags: ["Presentation", "Business"],
+    slug: "interactive-portfolio-design",
+    title: "Interactive Portfolio Design",
+    org: "Helica Studio",
+    year: "2024",
+    tags: ["UX/UI", "Web Design"],
     description:
-      "Clean, modern slide system for business portfolios and data stories.",
+      "Interactive portfolio concepts and interface design system.",
   },
   {
-    slug: "vectory-pack",
-    title: "Vectory Infographic Asset Pack",
-    org: "RRGraph",
-    year: "2022",
-    tags: ["Infographic", "Asset Pack"],
+    slug: "mazda-presentation-report",
+    title: "Mazda Presentation Report",
+    org: "RRGraph Design",
+    year: "2024",
+    tags: ["Presentation", "Report"],
     description:
-      "Infographic toolkit for complex mind maps and structured storytelling.",
-  },
-  {
-    slug: "voxel-series",
-    title: "3D Voxel Series",
-    org: "Personal",
-    year: "2022",
-    tags: ["3D", "Personal"],
-    description: "Ongoing voxel explorations using MagicaVoxel.",
+      "Professional presentation deck design and visual report system for Mazda.",
   },
 ];
 

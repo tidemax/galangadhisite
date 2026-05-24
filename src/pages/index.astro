@@ -7,35 +7,56 @@ const writingLinks = [
   { label: "How I built cleaner presentation workflows ↗", href: "/blog/cleaner-workflows" },
 ];
 
-let henloMedia = Object.entries(
-  import.meta.glob("/src/content/work/Henlo Branding/*.{png,jpg,jpeg,webp,mp4}", {
+let allMediaGlob = Object.entries(
+  import.meta.glob("/src/content/work/**/*.{png,jpg,jpeg,webp,mp4}", {
     eager: true,
     query: "?url",
     import: "default",
   })
-)
-  .map(([path, src]) => {
-    const name = path.split("/").pop() || "";
-    const lower = name.toLowerCase();
-    const ratioClass = lower.includes("portrait")
-      ? "tile-portrait"
-      : lower.includes("landscape")
-        ? "tile-landscape"
-        : "tile-square";
+);
 
-    return {
-      src: String(src),
-      name,
-      ratioClass,
-      isVideo: lower.endsWith(".mp4"),
-    };
-  })
-  .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+let allMediaFiles = allMediaGlob.map(([path, src]) => {
+  const parts = path.split("/");
+  const folderName = parts[parts.length - 2];
+  const fileName = parts[parts.length - 1];
+  const slug = folderName.toLowerCase().replace(/\s+/g, "-");
+  
+  const lower = fileName.toLowerCase();
+  const ratioClass = lower.includes("portrait")
+    ? "tile-portrait"
+    : lower.includes("landscape")
+      ? "tile-landscape"
+      : "tile-square";
 
-const idx4 = henloMedia.findIndex((item) => item.name.toLowerCase().startsWith("4 "));
-const idx10 = henloMedia.findIndex((item) => item.name.toLowerCase().startsWith("10 "));
-if (idx4 !== -1 && idx10 !== -1) {
-  [henloMedia[idx4], henloMedia[idx10]] = [henloMedia[idx10], henloMedia[idx4]];
+  return {
+    src: String(src),
+    name: fileName,
+    slug,
+    ratioClass,
+    isVideo: lower.endsWith(".mp4"),
+  };
+});
+
+const projectMediaMap: Record<string, typeof allMediaFiles> = {};
+for (const item of allMediaFiles) {
+  if (!projectMediaMap[item.slug]) {
+    projectMediaMap[item.slug] = [];
+  }
+  projectMediaMap[item.slug].push(item);
+}
+
+for (const slug in projectMediaMap) {
+  projectMediaMap[slug].sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
+
+// Custom sort logic for Henlo Branding
+if (projectMediaMap["henlo-branding"]) {
+  const henloMedia = projectMediaMap["henlo-branding"];
+  const idx4 = henloMedia.findIndex((item) => item.name.toLowerCase().startsWith("4 "));
+  const idx10 = henloMedia.findIndex((item) => item.name.toLowerCase().startsWith("10 "));
+  if (idx4 !== -1 && idx10 !== -1) {
+    [henloMedia[idx4], henloMedia[idx10]] = [henloMedia[idx10], henloMedia[idx4]];
+  }
 }
 
 const fallbackClasses = [
@@ -85,14 +106,14 @@ const fallbackClasses = [
               </div>
             )}
             <div class="work-mosaic" aria-hidden="true">
-              {index === 0 && henloMedia.length > 0
-                ? henloMedia.map((item, mediaIndex) =>
+              {projectMediaMap[work.slug] && projectMediaMap[work.slug].length > 0
+                ? projectMediaMap[work.slug].map((item, mediaIndex) => (
                     <div class={`tile-item ${item.ratioClass}`}>
                       {item.isVideo ? (
                         <video
                           class="tile-media tile-image"
                           src={item.src}
-                          aria-label={`Henlo Branding video ${mediaIndex + 1}`}
+                          aria-label={`${work.title} video ${mediaIndex + 1}`}
                           muted
                           loop
                           playsinline
@@ -103,18 +124,18 @@ const fallbackClasses = [
                         <img
                           class="tile-media tile-image"
                           src={item.src}
-                          alt={`Henlo Branding visual ${mediaIndex + 1}`}
+                          alt={`${work.title} visual ${mediaIndex + 1}`}
                           loading="lazy"
                           decoding="async"
                         />
                       )}
-                      <p class="tile-label">HENLO {String(mediaIndex + 1).padStart(2, "0")}.{item.name.split(".").pop()?.toUpperCase()}</p>
+                      <p class="tile-label">{work.title.toUpperCase()} {String(mediaIndex + 1).padStart(2, "0")}.{item.name.split(".").pop()?.toUpperCase()}</p>
                     </div>
-                  )
+                  ))
                 : fallbackClasses.map((ratioClass, imageIndex) => (
                     <div class={`tile-item ${ratioClass}`}>
                       <div class="placeholder tile-media"></div>
-                      <p class="tile-label">HENLO {String(imageIndex + 1).padStart(2, "0")}.PNG</p>
+                      <p class="tile-label">{work.title.toUpperCase()} {String(imageIndex + 1).padStart(2, "0")}.PNG</p>
                     </div>
                   ))}
             </div>
