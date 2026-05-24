@@ -2,7 +2,7 @@
 import EntryPage from "../../layouts/EntryPage.astro";
 
 const photos = Object.values(
-  import.meta.glob("/src/content/speak/From Passion to Profit/*.{jpeg,jpg,png}", {
+  import.meta.glob("/src/optimized/speak/From Passion to Profit/*.webp", {
     eager: true,
     query: "?url",
     import: "default",

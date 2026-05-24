@@ -7,13 +7,22 @@ const writingLinks = [
   { label: "How I built cleaner presentation workflows ↗", href: "/blog/cleaner-workflows" },
 ];
 
-let allMediaGlob = Object.entries(
-  import.meta.glob("/src/content/work/**/*.{png,jpg,jpeg,webp,mp4}", {
-    eager: true,
-    query: "?url",
-    import: "default",
-  })
-);
+let allMediaGlob = [
+  ...Object.entries(
+    import.meta.glob("/src/optimized/work/**/*.webp", {
+      eager: true,
+      query: "?url",
+      import: "default",
+    })
+  ),
+  ...Object.entries(
+    import.meta.glob("/src/content/work/**/*.mp4", {
+      eager: true,
+      query: "?url",
+      import: "default",
+    })
+  ),
+];
 
 let allMediaFiles = allMediaGlob.map(([path, src]) => {
   const parts = path.split("/");

@@ -2,7 +2,7 @@
 import Base from "../layouts/Base.astro";
 
 const archiveFiles = Object.entries(
-  import.meta.glob("/src/archivework/*.{jpg,jpeg,png,webp}", {
+  import.meta.glob("/src/optimized/archivework/*.webp", {
     eager: true,
     query: "?url",
     import: "default",
