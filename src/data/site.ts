@@ -8,7 +8,7 @@ export const profile = {
   current:
     "Creative Strategies at RRGraph Design and mentor for 3D Voxel Design at Pixel Ninja.",
   links: [
-    { label: "Email", href: "mailto:galangadhi47@gmail.com" },
+    { label: "Email", href: "mailto:workmail.galang@gmail.com" },
     { label: "Bento", href: "https://bento.me/galangadhi" },
     { label: "Behance", href: "https://www.behance.net/galangadhi" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/galangadhisaputra" },
@@ -122,12 +122,6 @@ export const speaking = [
     title:
       "From Passion to Profit: Monetisasi Kreativitas dalam Desain Grafis Produk Digital",
     venue: "Asia Goes To Campus",
-    location: "Malang, Indonesia",
-    note: "Language: Bahasa",
-  },
-  {
-    title: "How to Design Your Presentation Deck",
-    venue: "Webinar - Online ITB Asia",
     location: "Malang, Indonesia",
     note: "Language: Bahasa",
   },

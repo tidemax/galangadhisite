@@ -144,24 +144,33 @@ const fallbackClasses = [
       </div>
   </section>
 
-  <section class="section info-section reveal">
-      <div class="info-group reveal">
-        <div class="section-title">Writing</div>
-        <div class="info-links">
-          {writingLinks.map((item) => (
-            <a class="content-link" href={item.href}>{item.label}</a>
+  <section class="section speak-section reveal">
+    <div class="section-title">Speak</div>
+    <div class="speak-entry reveal">
+      <div class="speak-meta">
+        <p class="speak-venue">Asia Goes To Campus — Institut Asia Malang</p>
+        <p class="speak-date">Saturday, 17 June 2023</p>
+      </div>
+      <div class="speak-body">
+        <h2 class="speak-title">From Passion to Profit: Monetizing Creativity in Digital Graphic Design</h2>
+        <p class="speak-desc">
+          Invited as an alumni speaker by the Asia Institute team, I shared my personal journey from freelance designer to running a digital product studio.
+          The talk covered how designers can turn their craft into sustainable income — from selling digital assets on platforms like Graphic River and Envato Elements,
+          to building long-term creative strategy within a design studio.
+        </p>
+        <div class="speak-gallery">
+          {Object.values(import.meta.glob("/src/content/speak/From Passion to Profit/*.{jpeg,jpg,png}", { eager: true, query: "?url", import: "default" })).map((src, i) => (
+            <img
+              class="speak-img"
+              src={String(src)}
+              alt={`From Passion to Profit event photo ${i + 1}`}
+              loading="lazy"
+              decoding="async"
+            />
           ))}
         </div>
       </div>
-
-      <div class="info-group reveal">
-        <div class="section-title">Speak</div>
-        <div class="info-links">
-          {speaking.map((item) => (
-            <a class="content-link" href="/about#work-experience">{item.title} ↗</a>
-          ))}
-        </div>
-      </div>
+    </div>
   </section>
 
   <script is:inline>
@@ -376,25 +385,71 @@ const fallbackClasses = [
     color: #8a8a8a;
   }
 
-  .info-section {
-    padding-top: 32px;
+  .speak-section {
+    padding-top: 48px;
   }
 
-  .info-group {
+  .speak-section .section-title {
+    margin-bottom: 24px;
+  }
+
+  .speak-entry {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
+    grid-template-columns: 180px minmax(0, 1fr);
     gap: 32px;
-    margin-bottom: 48px;
+    align-items: start;
   }
 
-  .info-links {
-    display: grid;
-    gap: 16px;
+  .speak-meta {
+    padding-top: 4px;
   }
 
-  .info-links a {
+  .speak-venue {
+    margin: 0 0 6px;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
     line-height: 1.5;
-    font-size: 1rem;
+  }
+
+  .speak-date {
+    margin: 0;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
+  }
+
+  .speak-title {
+    margin: 0 0 14px;
+    font-size: 1.15rem;
+    font-weight: 400;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  .speak-desc {
+    margin: 0 0 28px;
+    max-width: 68ch;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  .speak-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .speak-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    background: var(--surface);
   }
 
   .reveal {
@@ -436,10 +491,13 @@ const fallbackClasses = [
       grid-column: auto;
     }
 
-    .info-group {
+    .speak-entry {
       grid-template-columns: 1fr;
-      gap: 12px;
-      margin-bottom: 32px;
+      gap: 16px;
+    }
+
+    .speak-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 </style>
